@@ -35,3 +35,21 @@ eval "$(rbenv init -)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Disable C-s and others from stopping/resuming program output, as it's pretty
+# much useless
+stty sane
+stty stop ""
+stty start ""
+stty werase ""
+
+# Map CapsLock to Esc
+xmodmap -e "clear Lock" -e "keycode 0x42 = Escape"
+
+# Git aliases
+
+git config --global alias.c "commit"
+git config --global alias.d "diff"
+git config --global alias.s "status"
+git config --global alias.p "push"
+git config --global alias.anoe "commit --amend --no-edit"

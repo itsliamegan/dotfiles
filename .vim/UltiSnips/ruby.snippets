@@ -1,23 +1,41 @@
+snippet clas "Class definition" b
+class $1
+  $2
+end
+endsnippet
+
+snippet mod "Module definition" b
+module $1
+  $2
+end
+endsnippet
+
 snippet def "Method definition" b
 def $1
-  
+  $2
 end
 endsnippet
 
 snippet init "Constructor definition" b
-def initialize()
-  
+def initialize($1)
+  $2
 end
 endsnippet
 
 snippet desc "RSpec description" b
-describe "$1" do
-  
+describe $1 do
+  $2
+end
+endsnippet
+
+snippet con "RSpec context" b
+context "$1"
+  $2
 end
 endsnippet
 
 snippet it "RSpec it statement" b
 it "$1" do
-  
+  $2
 end
 endsnippet

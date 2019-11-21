@@ -11,7 +11,7 @@ filetype plugin indent on
 
 " Line numbering, tabs as 2 spaces, backspace everything, color column at 81
 " chars
-set number
+set relativenumber
 set nowrap
 set tabstop=2
 set shiftwidth=2
@@ -34,6 +34,13 @@ let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 
 " Set the character that will trigger UltiSnips' snippets to Tab
 let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
 
 " Open a split when editing snippets
 let g:UltiSnipsEditSplit="vertical"
+
+" Map Ctrl+S to save a file
+map <C-s> :w<CR>
+
+" Map Ctrl+L to run a command
+map <C-l> :!

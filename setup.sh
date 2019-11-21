@@ -4,29 +4,28 @@ echo "Setting up all your dotfiles!"
 
 echo "Installing pathogen for vim, a simple plugin manager..."
 
-mkdir -p ~/.vim/autoload ~/.vim/bundle
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+mkdir -p ./.vim/autoload ./.vim/bundle
+curl -LSso ./.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 echo "Installing the following plugins for vim:"
 
 echo "* CtrlP"
-( cd ~/.vim/bundle && git clone git@github.com:kien/ctrlp.vim.git )
+( cd ./.vim/bundle && git clone git@github.com:kien/ctrlp.vim.git )
 
 echo "* UltiSnips"
-( cd ~/.vim/bundle && git clone git@github.com:sirver/ultisnips.vim.git )
+( cd ./.vim/bundle && git clone git@github.com:sirver/ultisnips.git )
 
 echo "* EditorConfig Support"
-( cd ~/.vim/bundle && git clone git@github.com:editorconfig/editorconfig-vim.git )
+( cd ./.vim/bundle && git clone git@github.com:editorconfig/editorconfig-vim.git )
 
 echo "* TypeScript Support"
-( cd ~/.vim/bundle && git clone git@github.com:leafgarland/typescript-vim.git )
+( cd ./.vim/bundle && git clone git@github.com:leafgarland/typescript-vim.git )
 
 # zsh
 
 echo "Installing zsh..."
 
 sudo apt install zsh -y
-chsh --shell $(which zsh) $USER
 
 echo "Installing Oh My Zsh!..."
 
@@ -49,4 +48,4 @@ echo "Linking the basic dotfiles to your home directory..."
 ln -sf "$PWD/.vimrc" ~/.vimrc
 ln -sf "$PWD/.zshrc" ~/.zshrc
 ln -sf "$PWD/.tmux.conf" ~/.tmux.conf
-
+ln -sf "$PWD/.vim" ~/.vim
