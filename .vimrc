@@ -9,15 +9,18 @@ set encoding=utf-8
 syntax on
 filetype plugin indent on
 
-" Line numbering, tabs as 2 spaces, backspace everything, color column at 81
-" chars
+" Set color theme
+colo xoria256
+
+" Line numbering, tabs as 2 spaces, backspace everything, text width of 80 chars
+" and color column after that
 set relativenumber
-set nowrap
 set tabstop=2
 set shiftwidth=2
 set expandtab
 set backspace=indent,eol,start
-set cc=81
+set textwidth=80
+set colorcolumn=+1
 
 " Improve search to be incremental and case-insensitive unless searches contain
 " capitals
