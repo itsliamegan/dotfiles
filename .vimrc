@@ -10,7 +10,7 @@ syntax on
 filetype plugin indent on
 
 " Set color theme
-colo xoria256
+colorscheme twilight256
 
 " Line numbering, tabs as 2 spaces, backspace everything, text width of 80 chars
 " and color column after that

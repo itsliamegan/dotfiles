@@ -21,8 +21,10 @@ echo "* EditorConfig Support"
 echo "* TypeScript Support"
 ( cd ./.vim/bundle && git clone git@github.com:leafgarland/typescript-vim.git )
 
-echo "* xoria256 color theme"
-( cd ./.vim/colors && curl -O https://raw.githubusercontent.com/vim-scripts/xoria256.vim/master/colors/xoria256.vim" )
+echo "* Color Themes"
+( cd ./.vim/bundle && git clone git@github.com:vim-scripts/xoria256.vim.git )
+( cd ./.vim/bundle && git clone git@github.com:vim-scripts/twilight256.vim.git )
+( cd ./.vim/bundle && git clone git@github.com:jpo/vim-railscasts-theme.git )
 
 # zsh
 

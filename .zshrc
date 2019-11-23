@@ -20,7 +20,7 @@ source $ZSH/oh-my-zsh.sh
 # Set vim as the default editor
 export EDITOR="vim"
 
-export TERM=screen-256color
+export TERM=xterm-256color
 
 # Add a vim plugin with a git repository
 vim-plugin() {
