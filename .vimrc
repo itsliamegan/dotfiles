@@ -47,3 +47,9 @@ map <C-s> :w<CR>
 
 " Map Ctrl+L to run a command
 map <C-l> :!
+
+" Map Ctrl+I to run rspec for the current file
+map <C-i> :!rspec %<CR>
+
+" Map Ctrl+K to run the whole rspec suite
+map <C-k> :!rspec<CR>
