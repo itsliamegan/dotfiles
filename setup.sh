@@ -15,6 +15,9 @@ echo "* CtrlP"
 echo "* UltiSnips"
 ( cd ./.vim/bundle && git clone git@github.com:sirver/ultisnips.git )
 
+echo "* MatchIt"
+( cd ./.vim/bundle && git clone git@github.com:adelarsq/vim-matchit.git )
+
 echo "* EditorConfig Support"
 ( cd ./.vim/bundle && git clone git@github.com:editorconfig/editorconfig-vim.git )
 
@@ -25,6 +28,7 @@ echo "* Color Themes"
 ( cd ./.vim/bundle && git clone git@github.com:vim-scripts/xoria256.vim.git )
 ( cd ./.vim/bundle && git clone git@github.com:vim-scripts/twilight256.vim.git )
 ( cd ./.vim/bundle && git clone git@github.com:jpo/vim-railscasts-theme.git )
+
 
 # zsh
 

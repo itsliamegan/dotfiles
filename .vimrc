@@ -33,7 +33,7 @@ set smartcase
 let g:ctrlp_show_hidden = 1
 
 " Ignore certain folders in CtrlP
-let g:ctrlp_custom_ignore = 'node_modules\|\.git'
+let g:ctrlp_custom_ignore = 'node_modules\|\.git\|tmp'
 
 " Set the character that will trigger UltiSnips' snippets to Tab
 let g:UltiSnipsExpandTrigger="<tab>"
