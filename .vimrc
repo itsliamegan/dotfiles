@@ -48,8 +48,20 @@ map <C-s> :w<CR>
 " Map Ctrl+L to run a command
 map <C-l> :!
 
-" Map Ctrl+I to run a test for the current file
+" Map Ctrl+I to run a test for the current file in Ruby
 autocmd FileType ruby map <buffer> <C-i> :!rake spec %<CR>
 
-" Map Ctrl+K to run the whole test suite
+" Map Ctrl+K to run the whole test suite in Ruby
 autocmd FileType ruby map <buffer> <C-k> :!rake spec<CR>
+
+" Map Ctrl+I to run a test for the current file in Elixir
+autocmd FileType ruby map <buffer> <C-i> :!mix test %<CR>
+
+" Map Ctrl+K to run the whole test suite in Elixir
+autocmd FileType elixir map <buffer> <C-k> :!mix test<CR>
+
+" Map Ctrl+K to run the whole test suite in Crystal
+autocmd FileType crystal map <buffer> <C-k> :!crystal spec<CR>
+
+" Map Ctrl+I to run a test for the current file in Elixir
+autocmd FileType crystal map <buffer> <C-i> :!crystal spec %<CR>
