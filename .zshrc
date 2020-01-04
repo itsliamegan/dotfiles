@@ -22,11 +22,6 @@ export EDITOR="vim"
 
 export TERM=xterm-256color
 
-# Add a vim plugin with a git repository
-vim-plugin() {
-  ( cd ~/.vim/bundle && git clone $1 )
-}
-
 # Add rbenv to the PATH and start it
 export PATH="$PATH:/home/liam/.rbenv/bin"
 eval "$(rbenv init -)"
@@ -36,8 +31,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# Disable C-s and others from stopping/resuming program output, as it's pretty
-# much useless
+# Disable C-s and others from stopping/resuming program output
 stty sane
 stty stop ""
 stty start ""

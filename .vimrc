@@ -1,5 +1,21 @@
-" Start the pathogen plugin manager
-execute pathogen#infect()
+" Start the vundle plugin manager
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Plugins
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'adelarsq/vim-matchit'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'sirver/ultisnips'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/xoria256.vim'
+Plugin 'vim-scripts/twilight256.vim'
+
+" Finish vundle setup
+call vundle#end()
 
 " Disable legacy vi compatibility and set character encoding
 set nocompatible
@@ -9,7 +25,7 @@ set encoding=utf-8
 syntax on
 filetype plugin indent on
 
-" Set color theme
+" Set color scheme
 colorscheme twilight256
 
 " Line numbering, tabs as 2 spaces, backspace everything, text width of 80 chars
@@ -55,7 +71,7 @@ autocmd FileType ruby map <buffer> <C-i> :!rake spec %<CR>
 autocmd FileType ruby map <buffer> <C-k> :!rake spec<CR>
 
 " Map Ctrl+I to run a test for the current file in Elixir
-autocmd FileType ruby map <buffer> <C-i> :!mix test %<CR>
+autocmd FileType elixir map <buffer> <C-i> :!mix test %<CR>
 
 " Map Ctrl+K to run the whole test suite in Elixir
 autocmd FileType elixir map <buffer> <C-k> :!mix test<CR>
