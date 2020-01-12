@@ -66,7 +66,7 @@ map <C-s> :w<CR>
 map <C-l> :!
 
 " Map Ctrl+I to run a test for the current file in Ruby
-autocmd FileType ruby map <buffer> <C-i> :!rake spec %<CR>
+autocmd FileType ruby map <buffer> <C-i> :!rake spec SPEC=%<CR>
 
 " Map Ctrl+K to run the whole test suite in Ruby
 autocmd FileType ruby map <buffer> <C-k> :!rake spec<CR>
