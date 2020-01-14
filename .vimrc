@@ -50,7 +50,7 @@ set smartcase
 let g:ctrlp_show_hidden = 1
 
 " Ignore certain folders in CtrlP
-let g:ctrlp_custom_ignore = 'node_modules\|\.git\|tmp'
+let g:ctrlp_custom_ignore = 'node_modules\|\.git\|tmp\|vendor'
 
 " Set the character that will trigger UltiSnips' snippets to Tab
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -65,20 +65,17 @@ map <C-s> :w<CR>
 " Map Ctrl+L to run a command
 map <C-l> :!
 
-" Map Ctrl+I to run a test for the current file in Ruby
-autocmd FileType ruby map <buffer> <C-i> :!rake spec SPEC=%<CR>
+" Map Ctrl+I and Ctrl+K to run one or all tests respectively for a variety of
+" languages
 
-" Map Ctrl+K to run the whole test suite in Ruby
+autocmd FileType ruby map <buffer> <C-i> :!rake spec SPEC=%<CR>
 autocmd FileType ruby map <buffer> <C-k> :!rake spec<CR>
 
-" Map Ctrl+I to run a test for the current file in Elixir
 autocmd FileType elixir map <buffer> <C-i> :!mix test %<CR>
-
-" Map Ctrl+K to run the whole test suite in Elixir
 autocmd FileType elixir map <buffer> <C-k> :!mix test<CR>
 
-" Map Ctrl+K to run the whole test suite in Crystal
+autocmd FileType crystal map <buffer> <C-i> :!crystal spec %<CR>
 autocmd FileType crystal map <buffer> <C-k> :!crystal spec<CR>
 
-" Map Ctrl+I to run a test for the current file in Elixir
-autocmd FileType crystal map <buffer> <C-i> :!crystal spec %<CR>
+autocmd FileType php map <buffer> <C-i> :!./vendor/bin/phpunit --color %<CR>
+autocmd FileType php map <buffer> <C-k> :!./vendor/bin/phpunit tests --color<CR>
