@@ -7,12 +7,13 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'adelarsq/vim-matchit'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'lokaltog/vim-distinguished'
 Plugin 'sirver/ultisnips'
 Plugin 'stanangeloff/php.vim'
+Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/xoria256.vim'
 Plugin 'vim-scripts/twilight256.vim'
 
 " Finish vundle setup
