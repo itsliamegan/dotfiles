@@ -4,6 +4,7 @@ echo "Setting up all your dotfiles!"
 
 echo "Installing the vundle plugin manager for vim..."
 
+mkdir ./.vim/bundle
 ( cd ./.vim/bundle && git clone git@github.com:VundleVim/Vundle.vim.git )
 
 echo "Installing vim plugins..."
@@ -25,12 +26,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 echo "Installing tmux"
 
 sudo apt install tmux -y
-
-echo "Backing up your current dotfiles..."
-
-mv ~/.vimrc ~/.vimrc.old
-mv ~/.zshrc ~/.zshrc.old
-mv ~/.tmux.conf ~/.tmux.conf.old
 
 echo "Linking the basic dotfiles to your home directory..."
 
