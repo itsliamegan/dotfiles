@@ -12,8 +12,9 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'lokaltog/vim-distinguished'
 Plugin 'sirver/ultisnips'
 Plugin 'stanangeloff/php.vim'
-Plugin 'townk/vim-autoclose'
+" Plugin 'townk/vim-autoclose'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/twilight256.vim'
 
 " Finish vundle setup
@@ -32,7 +33,7 @@ colorscheme twilight256
 
 " Line numbering, tabs as 2 spaces, backspace everything, text width of 80 chars
 " and color column after that
-set relativenumber
+set number relativenumber
 set tabstop=2
 set shiftwidth=2
 set expandtab
