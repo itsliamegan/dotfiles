@@ -13,6 +13,7 @@ Plugin 'lokaltog/vim-distinguished'
 Plugin 'sirver/ultisnips'
 Plugin 'stanangeloff/php.vim'
 " Plugin 'townk/vim-autoclose'
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/twilight256.vim'
@@ -70,8 +71,8 @@ map <C-l> :!
 " Map Ctrl+I and Ctrl+K to run one or all tests respectively for a variety of
 " languages
 
-autocmd FileType ruby map <buffer> <C-i> :!rake spec SPEC=%<CR>
-autocmd FileType ruby map <buffer> <C-k> :!rake spec<CR>
+autocmd FileType ruby map <buffer> <C-i> :!rake test TEST=%<CR>
+autocmd FileType ruby map <buffer> <C-k> :!rake test<CR>
 
 autocmd FileType elixir map <buffer> <C-i> :!mix test %<CR>
 autocmd FileType elixir map <buffer> <C-k> :!mix test<CR>
