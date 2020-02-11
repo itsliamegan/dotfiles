@@ -1,0 +1,5 @@
+[alias]
+co = checkout
+cm = commit -m
+anoe = commit --amend --no-edit
+dc = diff --cached HEAD

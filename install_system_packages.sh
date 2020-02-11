@@ -10,6 +10,7 @@ sudo apt install -y \
      gcc \
      git \
      g++ \
+     htop \
      i3 \
      make \
      python3 \
@@ -18,4 +19,5 @@ sudo apt install -y \
      sudo \
      tlp \
      vim \
-     wget
+     wget \
+     xorg
