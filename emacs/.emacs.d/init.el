@@ -16,18 +16,10 @@
 
 ;; Define some utility functions.
 
-(defun fullscreen ()
-       (interactive)
-       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                 '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-
 (defun kill-other-buffers ()
       "Kill all buffers other than the current."
       (interactive)
       (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-
-;; Set Emacs to fullscreen.
-(fullscreen)
 
 ;; Disable any visual or audio error bell.
 (setq ring-bell-function 'ignore)
