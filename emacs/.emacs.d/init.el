@@ -83,9 +83,9 @@
   (ivy-mode))
 
 ;; Install and use TextMate's twilight color scheme.
-(use-package twilight-theme
+(use-package solarized-theme
   :config
-  (load-theme 'twilight t))
+  (load-theme 'solarized-dark t))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
