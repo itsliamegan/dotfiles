@@ -7,6 +7,7 @@ sudo apt install -y \
      curl \
      emacs \
      firefox \
+     fonts-inconsolata \
      gcc \
      git \
      g++ \
@@ -14,6 +15,7 @@ sudo apt install -y \
      i3 \
      make \
      python3 \
+     rofi \
      rxvt-unicode \
      stow \
      sudo \
