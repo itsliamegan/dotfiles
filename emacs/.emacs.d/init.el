@@ -16,10 +16,10 @@
 
 ;; Define some utility functions.
 
-(defun kill-other-buffers ()
-      "Kill all buffers other than the current."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+(defun util/kill-other-buffers ()
+  "Kill all buffers other than the current."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
 ;; Disable any visual or audio error bell.
 (setq ring-bell-function 'ignore)
@@ -44,12 +44,6 @@
 ;; Highlight the current line.
 (global-hl-line-mode)
 
-;; Highlight characters after the 80 character limit.
-(require 'whitespace)
-(setq whitespace-style '(face trailing tabs lines-tail)
-      whitespace-line-column 70)
-(global-whitespace-mode)
-
 ;; Org mode for plaintext editing.
 (use-package org)
 
@@ -66,7 +60,6 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
   (setq projectile-completion-system 'ivy
-        projectile-switch-project-action 'projectile-dired
         projectile-require-project-root nil))
 
 ;; Use Ivy as the completion system.
@@ -74,7 +67,25 @@
   :config
   (ivy-mode))
 
-;; Install and use TextMate's twilight color scheme.
+;; Use dumb-jump to jump to definition of a symbol.
+(use-package dumb-jump
+  :config
+  (dumb-jump-mode))
+
+;; Show a column at 80 characters to indicate code length limit.
+(use-package fill-column-indicator
+  :config
+  (setq fci-column-indicator 80)
+  (setq fci-rule-use-dashes t)
+  (setq fci-rule-width 2)
+  (setq fci-rule-color "#696969")
+  (fci-mode))
+
+(use-package chruby
+  :config
+  (chruby-use-corresponding))
+
+;; Install and use the solarized theme.
 (use-package solarized-theme
   :config
   (load-theme 'solarized-dark t))
@@ -85,7 +96,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evil-collection use-package twilight-theme s projectile minions linum-relative ivy fill-column-indicator evil))))
+    (chruby dumb-jump rbenv evil-collection use-package twilight-theme s projectile minions linum-relative ivy fill-column-indicator evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

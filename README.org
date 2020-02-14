@@ -10,4 +10,6 @@ configuration files can be found in this repository's history.
 From a fresh install of Debian, there are a few things you need to do
 before using this repository. After boot, you must install sudo and
 git as root via apt. Then, you can clone this repository into a
-directory for your dotfiles - I use ~/dotfiles.
+directory for your dotfiles - I use ~/dotfiles. After that, run
+./install.sh and wait while all the necessary packages are installed
+and files are symlinked. After that, you should be all set!
