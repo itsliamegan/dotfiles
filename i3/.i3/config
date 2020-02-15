@@ -4,6 +4,10 @@ font pango:Inconsolata 12
 # Use the windows key as $mod.
 set $mod Mod4
 
+# Background and transparency.
+exec feh --bg-scale ~/Wallpapers/Alaska.jpg
+exec xcompmgr -n
+
 # Hide titles and borders on windows.
 default_border pixel
 
@@ -16,11 +20,11 @@ bindsym $mod+d exec rofi -matching fuzzy -theme solarized -show run
 # Kill focused window.
 bindsym $mod+Shift+q kill
 
-# Set the home row keys for directional movement.
-set $left j
-set $down k
-set $up l
-set $right semicolon
+# Set the vim keys for directional movement.
+set $left h
+set $down j
+set $up k
+set $right l
 
 # Change focus.
 bindsym $mod+$left focus left

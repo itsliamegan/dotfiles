@@ -10,5 +10,5 @@ addtopath /usr/local/sbin
 export PATH
 
 # Setup chruby to change ruby versions.
-source /usr/local/bin/chruby.sh
-source /usr/local/bin/auto.sh
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh

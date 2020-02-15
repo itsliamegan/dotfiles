@@ -1,9 +1,12 @@
 ! Xft.
-Xft*antialias: true
+xft*antialias: true
 
 ! URxvt.
-URxvt*scrollBar: false
-URxvt*font: xft:Inconsolata:size=14
+urxvt*scrollBar: false
+urxvt*font: xft:Inconsolata:size=16
+
+! Emacs.
+emacs*font: Inconsolata-16
 
 ! Solarized base colors.
 

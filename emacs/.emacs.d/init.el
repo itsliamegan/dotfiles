@@ -21,6 +21,11 @@
   (interactive)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
+(defun util/transparency (amount)
+  "Set Emacs to be (100-AMOUNT)% transparent."
+  (interactive "nTransparency Amount:")
+  (set-frame-parameter (selected-frame) 'alpha amount))
+
 ;; Disable any visual or audio error bell.
 (setq ring-bell-function 'ignore)
 
@@ -89,6 +94,7 @@
 (use-package solarized-theme
   :config
   (load-theme 'solarized-dark t))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -8,6 +8,7 @@ sudo apt install -y \
      bzip2 \
      curl \
      emacs \
+     feh \
      firefox \
      fonts-inconsolata \
      git \
@@ -21,6 +22,8 @@ sudo apt install -y \
      sudo \
      tar \
      tlp \
+     unzip \
      vim \
      wget \
+     xcompmgr \
      xorg
