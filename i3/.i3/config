@@ -1,5 +1,5 @@
 # Font.
-font pango:Inconsolata 12
+font pango:Inconsolata 14
 
 # Use the windows key as $mod.
 set $mod Mod4
@@ -8,8 +8,8 @@ set $mod Mod4
 exec feh --bg-scale ~/Wallpapers/Alaska.jpg
 exec xcompmgr -n
 
-# Hide titles and borders on windows.
-default_border pixel
+# Disable borders on windows.
+default_border none
 
 # Open a terminal.
 bindsym $mod+Return exec urxvt
