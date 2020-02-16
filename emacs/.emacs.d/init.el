@@ -60,6 +60,7 @@
 (use-package diminish
   :config
   (diminish 'abbrev-mode)
+  (diminish 'auto-revert-mode)
   (diminish 'eldoc-mode))
 
 ;; Highlight characters after the 80 character limit.
