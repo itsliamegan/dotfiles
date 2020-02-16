@@ -3,6 +3,7 @@ co = checkout
 cm = commit -m
 anoe = commit --amend --no-edit
 dc = diff --cached HEAD
+
 [user]
-  name = Liam
-  email = itsliamegan@protonmail.com
+name = Liam
+email = itsliamegan@protonmail.com
