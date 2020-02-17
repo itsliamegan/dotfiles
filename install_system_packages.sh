@@ -14,8 +14,13 @@ sudo apt install -y \
      git \
      htop \
      i3 \
+     network-manager \
+     network-manager-gnome \
      openssl \
      python3 \
+     pasystray \
+     pavucontrol \
+     pulseaudio \
      rofi \
      rxvt-unicode \
      stow \
