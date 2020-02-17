@@ -4,10 +4,6 @@ font pango:Inconsolata 14
 # Use the windows key as $mod.
 set $mod Mod4
 
-# Background and transparency.
-exec feh --bg-scale ~/Wallpapers/Alaska.jpg
-exec xcompmgr -n
-
 # Disable borders on windows.
 default_border none
 
@@ -56,6 +52,10 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Move workspaces for multi-monitor setup.
+workspace $ws1 output DP-2-1
+workspace $ws2 output DP-2-2
+
 # Switch to a different workspace.
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -83,8 +83,29 @@ bindsym $mod+Shift+10 move container to workspace number $ws10
 # Restart i3.
 bindsym $mod+Shift+r restart
 
-# Status bar.
+# Exit i3.
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Are you sure you want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# Rebind keys.
+exec --no-startup-id xmodmap ~/.Xmodmap
+
+# When pressing Control, xcape will map it to Escape. Otherwise, it
+# will be treated as a normal Control.
+
+# Start xcompmgr to manage transparency.
+exec --no-startup-id xcompmgr -n &
+
+# Set background to static image.
+exec --no-startup-id feh --bg-scale ~/Wallpapers/Alaska.jpg
+
+# Start system tray applications.
+exec --no-startup-id pasystray &
+exec --no-startup-id nm-applet &
+
+# Status bar config.
 bar {
   status_command i3status
+
+  position top
+  tray_output primary
 }
