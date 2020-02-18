@@ -132,6 +132,9 @@
   :config
   (add-hook 'ruby-mode-hook 'minitest-mode))
 
+;; Open links in Emacs' built in browser.
+(setq browse-url-browser-function 'eww-browse-url)
+
 ;; Engine mode for searching the web.
 (use-package engine-mode
   :config
@@ -148,11 +151,12 @@
 (use-package elfeed
   :bind ("C-c r" . elfeed)
   :config
-  (setq elfeed-feeds '("https://www.counterpunch.org/feed"
-		       "https://jacobinmag.com/feed"
-		       "https://newrepublic.com/rss.xml"
-		       "https://theintercept.com/feed?rss"
-		       "https://www.thenation.com/feed/?post_type=article")))
+  (setq elfeed-feeds '(("https://www.counterpunch.org/feed" politics)
+		       ("https://jacobinmag.com/feed" politics)
+		       ("https://newrepublic.com/rss.xml" politics)
+		       ("https://theintercept.com/feed?rss" politics)
+		       ("https://www.thenation.com/feed/?post_type=article" politics)
+		       ("https://news.ycombinator.com/rss" dev))))
 
 ;; Install and use the solarized theme.
 (use-package solarized-theme
