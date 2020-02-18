@@ -18,6 +18,7 @@ sudo apt install -y \
      network-manager-gnome \
      openssl \
      python3 \
+     pass \
      pasystray \
      pavucontrol \
      pulseaudio \
