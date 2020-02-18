@@ -93,7 +93,7 @@ exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id xcompmgr -n &
 
 # Set background to static image.
-exec --no-startup-id feh --bg-scale ~/Wallpapers/Alaska.jpg
+exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/Alaska.jpg
 
 # Start system tray applications.
 exec --no-startup-id pasystray &
