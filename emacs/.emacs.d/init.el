@@ -132,6 +132,28 @@
   :config
   (add-hook 'ruby-mode-hook 'minitest-mode))
 
+;; Engine mode for searching the web.
+(use-package engine-mode
+  :config
+  (engine/set-keymap-prefix (kbd "C-c s"))
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
+  (defengine stackoverflow
+    "https://stackoverflow.com/search?q=%s"
+    :keybinding "s")
+  (engine-mode))
+
+;; Elfeed for reading RSS.
+(use-package elfeed
+  :bind ("C-c r" . elfeed)
+  :config
+  (setq elfeed-feeds '("https://www.counterpunch.org/feed"
+		       "https://jacobinmag.com/feed"
+		       "https://newrepublic.com/rss.xml"
+		       "https://theintercept.com/feed?rss"
+		       "https://www.thenation.com/feed/?post_type=article")))
+
 ;; Install and use the solarized theme.
 (use-package solarized-theme
   :config
@@ -146,10 +168,11 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck yaml-mode use-package solarized-theme minitest markdown-mode magit helm-projectile fill-column-indicator evil-collection dumb-jump diminish counsel-projectile chruby))))
+    (elfeed yaml-mode use-package solarized-theme minitest markdown-mode helm-projectile flycheck fill-column-indicator evil-surround evil-magit evil-collection dumb-jump diminish counsel-projectile chruby))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
