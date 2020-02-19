@@ -24,6 +24,7 @@ sudo apt install -y \
      pulseaudio \
      rofi \
      rxvt-unicode \
+     silversearcher-ag \
      stow \
      sudo \
      tar \
@@ -31,5 +32,6 @@ sudo apt install -y \
      unzip \
      vim \
      wget \
+     xcape \
      xcompmgr \
      xorg

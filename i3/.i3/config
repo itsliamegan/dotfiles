@@ -89,6 +89,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Are you sure you want to exi
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
 
+# When pressing and holding Control, map it to Escape. Otherwise,
+# treat it as a normal Control.
+exec --no-startup-id xcape &
+
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
 
