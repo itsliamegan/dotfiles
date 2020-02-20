@@ -1,0 +1,422 @@
+#+TITLE: Liam's Emacs Configuration
+
+* Package Management
+
+** =package=
+
+Emacs has a built in package management solution called,
+appropriately, =package=. We start by installing it and adding some
+repositories so that more packages can be downloaded. The first is the
+official GNU package repository, and the second, MELPA, is a popular
+community driven repository.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (package-initialize)
+#+END_SRC
+
+** =use-package=
+
+=package= provides an interface for installing packages, but it
+becomes tedious to manage for multiple files. Instead, I use the
+=use-package= macro to install and configure packages. We need to
+install use-package and configure it to always "ensure" packages are
+installed if they're not already.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+#+END_SRC
+
+* Utility Functions
+
+To get them out of the way and in case we need to use them later, here
+we define a few useful functions.
+
+#+BEGIN_SRC emacs-lisp
+  (defun kill-other-buffers ()
+    "Kill all buffers other than the current."
+    (interactive)
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+
+  (defun test-project ()
+    "Test the current project."
+    (interactive)
+    (cond ((eq major-mode 'ruby-mode) (minitest-verify-all))))
+
+  (defun test-buffer ()
+    "Test the current buffer."
+    (interactive)
+    (cond ((eq major-mode 'ruby-mode) (minitest-verify))))
+
+  (defun transparency (amount)
+    "Set Emacs to be (100-AMOUNT)% transparent."
+    (interactive "nTransparency Amount:")
+    (set-frame-parameter (selected-frame) 'alpha amount))
+#+END_SRC
+* Systemic Changes / Packages
+
+Here is where we start to install packages that add large pieces of
+functionality.
+
+** Fuzzy Finding
+
+=ivy= is a simple, minimal completion engine for many of Emacs' search
+prompts like =find-file= and =M-x=. If you've heard of =helm=, it's
+similar, but less overbearing, heavy, and has a far smaller surface
+area of functionality. For those and some other reasons, I prefer
+=ivy=. First, we install =ivy=, then set it to use fuzzy searching.
+
+=swiper= and =counsel= are just extensions for =ivy= that add its
+functionality to native Emacs functions
+
+=flx= provides fuzzy searching, but more importantly, =ivy= will use
+it to sort search results.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :config
+    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+    (ivy-mode))
+
+  (use-package swiper)
+  (use-package counsel
+    :config
+    (counsel-mode))
+
+  (use-package flx)
+#+END_SRC
+
+** =projectile=
+
+This is a project management library. I only use a few features from
+it, so I'm trying to find alternatives, but for now this is the best
+option. We install it as well as =counsel-projectile=, which provides
+some commands with =ivy= completion for =projectile=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :config
+    (setq projectile-completion-system 'ivy))
+
+  (use-package counsel-projectile
+    :after projectile
+    :config
+    (counsel-projectile-mode))
+#+END_SRC
+
+** =magit=
+
+=magit= is a wonderful interface for using git in Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit)
+#+END_SRC
+
+** =dumb-jump=
+
+Jump to definition is a great feature of modern editors, and the
+=dumb-jump= package provides it. We install it and set it to use 'ivy
+for completion instead of a small popup.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump
+    :config
+    (setq dumb-jump-selector 'ivy)
+    (dumb-jump-mode))
+#+END_SRC
+
+** =avy=
+
+This package provides an alternate method to jump to a specific place
+in code without repeatedly using control movement.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy)
+#+END_SRC
+
+* Language-Specific Packages
+
+** Markdown
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode)
+#+END_SRC
+
+** YAML
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode)
+#+END_SRC
+
+** Ruby
+
+I use =chruby= to change Ruby versions, so we install that and tell it
+to use the correct Ruby version from whatever =.ruby-version= file is
+correct according to =chruby=.
+
+I also use =minitest= to test my Ruby projects, so we install and
+enable a mode for it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package chruby
+    :config
+    (chruby-use-corresponding))
+
+  (use-package minitest
+    :config
+    (add-hook 'ruby-mode-hook 'minitest-mode))
+#+END_SRC
+
+* Quality of Life
+
+** Startup
+
+I dislike the default starting screen, so here we replace it with a
+scratch =org-mode= buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t
+        initial-scratch-message nil
+        initial-major-mode 'org-mode)
+#+END_SRC
+
+** Bell
+
+By default, Emacs (and terminals in general) play a "bell" sound when
+an operation is not possible or an error occurs. Emacs provides a
+setting to disable it, but it's then replaced by a "flash" of sorts,
+which I also don't like. Instead, when Emacs tries to ring the bell,
+we do nothing.
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
+** Modeline
+
+I don't like seeing all the minor modes in the modeline, so I use the
+=minions= package to hide all of them. By default, the package uses
+the final parenthesis to make a smilie face, but I don't want that, so
+we set the delimiters of the mode to nothing, since only the major
+mode will ever be shown.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package minions
+    :config
+    (setq minions-mode-line-lighter ""
+          minions-mode-line-delimiters '("" . ""))
+    (minions-mode))
+#+END_SRC
+
+** Spaces/Tabs
+
+I use 2 spaces for indentation, but by default Emacs uses tabs. We set
+Emacs to use 2 spaces instead.
+
+#+BEGIN_SRC emacs-lisp
+  (setq indent-tabs-mode nil
+        tab-stop-lisp (number-sequence 2 60 2))
+#+END_SRC
+
+** Backups and Autosaving
+
+By default, Emacs leaves autosave and backup files scattered across
+the filesystem next to whatever file they're backing up or autosaving.
+I dislike the clutter this creates, so instead we set them to be saved
+in dedicated directories in Emacs' configuration folder.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
+** Yes and No
+
+Emacs often asks "yes" or "no" questions, but unlike most other
+programs, doesn't accept "y" and "n" as answers. We alias the
+predicate function that checks this to accept "y" or "n" as well.
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Default Shell
+
+I use =ansi-term= for most of my terminal uses because it allows me to
+use Emacs keybindings and not have to leave Emacs, but it annoyingly
+asks every time which shell I want to use. Since I use =bash=, I set
+Emacs to use it every time I open =ansi-term=.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar default-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list default-shell)))
+  (ad-activate 'ansi-term)
+#+END_SRC
+
+** Follow Symlinks
+
+Emacs usually asks for confirmation if you want to follow a symlink,
+but I always want to transparently follow it, so we tell Emacs to just
+go ahead and follow the link without confirmation.
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
+** Delete Trailing Whitespace
+
+As mentioned in the last section, I highlight trailing whitespace so
+that I can get rid of it. To help me with that, we tell Emacs to
+automatically delete trailing whitespace when saving a buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+** Sentence Spacing
+
+We tell Emacs that sentences don't end with double spaces.
+
+#+BEGIN_SRC emacs-lisp
+  (setq sentence-end-double-space nil)
+#+END_SRC
+
+** Always End With a Newline
+
+It's good convention to end files with a newline, so we set Emacs to
+automatically do so.
+
+#+BEGIN_SRC emacs-lisp
+  (setq require-final-newline t)
+#+END_SRC
+
+* Visuals
+
+** Theme
+
+The biggest visual change is the theme. As of now, I use
+=solarized-dark=, mostly because I can also configure everything in
+Xorg to use the same colors. I like highlighting the modeline a
+grayish-white color, so we enable that. By default, solarized also
+changes the font face and size of headlines in org mode, which I don't
+like, so we disable it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :config
+    (setq solarized-high-contrast-mode-line t
+          solarized-use-variable-pitch nil
+          solarized-scale-org-headlines nil)
+    (load-theme 'solarized-dark t))
+#+END_SRC
+
+** Remove Bars
+
+I find the graphical bars clutter, so here we remove them.
+
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+#+END_SRC
+
+** Highlight Line
+
+I find highlighting the current line helpful for finding the point,
+and Emacs provides built-in functionality to do just that, so here we
+enable it.
+
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode)
+#+END_SRC
+
+** Whitespace
+
+I use the =whitespace= package to highlight characters past the 80th
+column (my personal line length limit). However, for some reason
+whatever I set =whitespace-line-column= to, =whitespace= only
+highlights characters 10 columns after that, so here we set it to 70.
+Also, we set whitespace to highlight tab characters, and trailing
+spaces.
+
+#+BEGIN_SRC emacs-lisp
+(use-package whitespace
+  :config
+  (setq whitespace-style '(face
+			   trailing
+                           space-before-tab
+			   space-after-tab
+			   lines-tail)
+        whitespace-line-column 70)
+  (global-whitespace-mode))
+#+END_SRC
+
+* External Programs
+
+I also use Emacs for multiple things outside of editing text. We will
+configure them in this section.
+
+** RSS with =elfeed=
+
+#+BEGIN_SRC emacs-lisp
+(use-package elfeed
+  :config
+  (setq elfeed-feeds '(("https://www.counterpunch.org/feed" politics)
+		       ("https://jacobinmag.com/feed" politics)
+		       ("https://newrepublic.com/rss.xml" politics)
+		       ("https://theintercept.com/feed?rss" politics)
+		       ("https://www.thenation.com/feed/?post_type=article" politics)
+
+		       ("https://news.ycombinator.com/rss" dev))))
+#+END_SRC
+
+* Keybindings
+
+Finally, we will define all the keybindings for the various shortcuts
+and commands I use. I tried to have mnemonic bindings like Spacemacs
+and Doom, but found that it was too cumbersome. I might switch, but
+for now I've decided to bind things to small combinations that I'm
+mostly used to.
+
+** =which-key=
+
+This package shows a list of all the keybindings available when you
+press a prefix key. It's very helpful for learning the bindings.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :config
+    (which-key-mode))
+#+END_SRC
+** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "C-j"))
+
+  (global-set-key (kbd "C-j c") 'avy-goto-char)
+  (global-set-key (kbd "C-j l") 'avy-goto-line)
+  (global-set-key (kbd "C-j d") 'dumb-jump-go)
+
+  (global-set-key (kbd "C-<") 'previous-buffer)
+  (global-set-key (kbd "C->") 'next-buffer)
+
+  (global-set-key (kbd "C-s") 'swiper-isearch)
+  (global-set-key (kbd "C-S-s") 'counsel-projectile-ag)
+  (global-set-key (kbd "C-c p") 'counsel-projectile-switch-project)
+  (global-set-key (kbd "C-c f") 'counsel-projectile-find-file)
+  (global-set-key (kbd "C-c g") 'magit)
+  (global-set-key (kbd "C-c t") 'test-buffer)
+  (global-set-key (kbd "C-c S-t") 'test-project)
+
+  (global-set-key (kbd "C-c e r") 'elfeed)
+#+END_SRC
