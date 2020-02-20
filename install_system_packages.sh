@@ -32,6 +32,5 @@ sudo apt install -y \
      unzip \
      vim \
      wget \
-     xcape \
      xcompmgr \
      xorg
