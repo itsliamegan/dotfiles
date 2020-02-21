@@ -86,6 +86,10 @@ bindsym $mod+Shift+r restart
 # Exit i3.
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Are you sure you want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
 
+# Increase and decrease brightness.
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
 

@@ -32,5 +32,6 @@ sudo apt install -y \
      unzip \
      vim \
      wget \
+     xbacklight \
      xcompmgr \
      xorg
