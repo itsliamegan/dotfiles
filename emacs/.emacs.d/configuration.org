@@ -402,7 +402,6 @@ press a prefix key. It's very helpful for learning the bindings.
 
 #+BEGIN_SRC emacs-lisp
   (global-unset-key (kbd "C-j"))
-
   (global-set-key (kbd "C-j c") 'avy-goto-char)
   (global-set-key (kbd "C-j l") 'avy-goto-line)
   (global-set-key (kbd "C-j d") 'dumb-jump-go)
@@ -410,13 +409,16 @@ press a prefix key. It's very helpful for learning the bindings.
   (global-set-key (kbd "C-<") 'previous-buffer)
   (global-set-key (kbd "C->") 'next-buffer)
 
-  (global-set-key (kbd "C-s") 'swiper-isearch)
-  (global-set-key (kbd "C-S-s") 'counsel-projectile-ag)
+  (global-unset-key (kbd "C-s"))
+  (global-set-key (kbd "C-s b") 'swiper-isearch)
+  (global-set-key (kbd "C-s p") 'counsel-projectile-ag)
+
   (global-set-key (kbd "C-c p") 'counsel-projectile-switch-project)
   (global-set-key (kbd "C-c f") 'counsel-projectile-find-file)
   (global-set-key (kbd "C-c g") 'magit)
-  (global-set-key (kbd "C-c t") 'test-buffer)
-  (global-set-key (kbd "C-c S-t") 'test-project)
+
+  (global-set-key (kbd "C-c t b") 'test-buffer)
+  (global-set-key (kbd "C-c t p") 'test-project)
 
   (global-set-key (kbd "C-c e r") 'elfeed)
 #+END_SRC
