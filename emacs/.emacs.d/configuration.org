@@ -40,30 +40,65 @@ To get them out of the way and in case we need to use them later, here
 we define a few useful functions.
 
 #+BEGIN_SRC emacs-lisp
-  (defun kill-other-buffers ()
+  (defun util/delete-current-file ()
+    (interactive)
+    (delete-file (buffer-file-name))
+    (kill-buffer))
+
+  (defun util/kill-other-buffers ()
     "Kill all buffers other than the current."
     (interactive)
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
-  (defun test-project ()
+  (defun util/rename-current-file (new-name)
+    (interactive "FNew name: ")
+    (let ((filename (buffer-file-name)))
+      (when (buffer-modified-p)
+	(save-buffer))
+      (rename-file filename new-name t)
+      (kill-buffer (current-buffer))
+      (find-file new-name)
+      (message "Renamed '%s' to '%s'" filename new-name)))
+
+  (defun util/test-project ()
     "Test the current project."
     (interactive)
     (cond ((eq major-mode 'ruby-mode) (minitest-verify-all))))
 
-  (defun test-buffer ()
-    "Test the current buffer."
+  (defun util/test-file ()
+    "Test the current file."
     (interactive)
     (cond ((eq major-mode 'ruby-mode) (minitest-verify))))
 
-  (defun transparency (amount)
+  (defun util/transparency (amount)
     "Set Emacs to be (100-AMOUNT)% transparent."
-    (interactive "nTransparency Amount:")
+    (interactive "nTransparency Amount: ")
     (set-frame-parameter (selected-frame) 'alpha amount))
 #+END_SRC
+
 * Systemic Changes / Packages
 
 Here is where we start to install packages that add large pieces of
 functionality.
+
+** =evil=
+
+I came from vim, so I'm familiar with (and fond of) vim's "language"
+of sorts for editing text. We install =evil=, which emulates vim, and
+=evil-collection=, to get =evil= bindings in most modes.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode))
+
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+END_SRC
 
 ** Fuzzy Finding
 
@@ -113,10 +148,13 @@ some commands with =ivy= completion for =projectile=.
 
 ** =magit=
 
-=magit= is a wonderful interface for using git in Emacs.
+=magit= is a wonderful interface for using git in Emacs. We also
+install =evil= bindings for it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package magit)
+  (use-package evil-magit
+    :after magit)
 #+END_SRC
 
 ** =dumb-jump=
@@ -300,6 +338,23 @@ automatically do so.
   (setq require-final-newline t)
 #+END_SRC
 
+** Dired File Sizes
+
+Make dired use the -h option, which makes file sizes use human
+readable units (KB, MB, etc).
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default dired-listing-switches "-alh")
+#+END_SRC
+
+** Auto Reload Buffers
+
+Always reload buffers when the underlying file changes.
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode)
+#+END_SRC
+
 * Visuals
 
 ** Theme
@@ -361,32 +416,11 @@ spaces.
   (global-whitespace-mode))
 #+END_SRC
 
-* External Programs
-
-I also use Emacs for multiple things outside of editing text. We will
-configure them in this section.
-
-** RSS with =elfeed=
-
-#+BEGIN_SRC emacs-lisp
-(use-package elfeed
-  :config
-  (setq elfeed-feeds '(("https://www.counterpunch.org/feed" politics)
-		       ("https://jacobinmag.com/feed" politics)
-		       ("https://newrepublic.com/rss.xml" politics)
-		       ("https://theintercept.com/feed?rss" politics)
-		       ("https://www.thenation.com/feed/?post_type=article" politics)
-
-		       ("https://news.ycombinator.com/rss" dev))))
-#+END_SRC
-
 * Keybindings
 
 Finally, we will define all the keybindings for the various shortcuts
-and commands I use. I tried to have mnemonic bindings like Spacemacs
-and Doom, but found that it was too cumbersome. I might switch, but
-for now I've decided to bind things to small combinations that I'm
-mostly used to.
+and commands that I use. Inspired heavily by Spacemacs and Doom, I've
+tried to be mnemonic and logical.
 
 ** =which-key=
 
@@ -398,27 +432,60 @@ press a prefix key. It's very helpful for learning the bindings.
     :config
     (which-key-mode))
 #+END_SRC
-** Bindings
+** Unbindings
+
+I'd like to get used to my custom bindings rather than these default
+Emacs bindings, so we unbind them.
 
 #+BEGIN_SRC emacs-lisp
-  (global-unset-key (kbd "C-j"))
-  (global-set-key (kbd "C-j c") 'avy-goto-char)
-  (global-set-key (kbd "C-j l") 'avy-goto-line)
-  (global-set-key (kbd "C-j d") 'dumb-jump-go)
+  (global-unset-key (kbd "C-x C-s"))
+  (global-unset-key (kbd "C-x C-c"))
+  (global-unset-key (kbd "C-x 1"))
+  (global-unset-key (kbd "C-x 2"))
+  (global-unset-key (kbd "C-x 3"))
+#+END_SRC
 
-  (global-set-key (kbd "C-<") 'previous-buffer)
-  (global-set-key (kbd "C->") 'next-buffer)
+** General / Aliases
 
-  (global-unset-key (kbd "C-s"))
-  (global-set-key (kbd "C-s b") 'swiper-isearch)
-  (global-set-key (kbd "C-s p") 'counsel-projectile-ag)
+These commands are so useful that they get their own special bindings.
+Some might be defined later as well, so these are "shortcuts".
 
-  (global-set-key (kbd "C-c p") 'counsel-projectile-switch-project)
-  (global-set-key (kbd "C-c f") 'counsel-projectile-find-file)
-  (global-set-key (kbd "C-c g") 'magit)
+#+BEGIN_SRC emacs-lisp
+  (evil-define-key 'normal 'global
+    (kbd "C-s") 'save-buffer
+    (kbd "C-q") 'save-buffers-kill-terminal)
+#+END_SRC
 
-  (global-set-key (kbd "C-c t b") 'test-buffer)
-  (global-set-key (kbd "C-c t p") 'test-project)
+** Projects
 
-  (global-set-key (kbd "C-c e r") 'elfeed)
+#+BEGIN_SRC emacs-lisp
+  (define-prefix-command 'project-map)
+  (define-key evil-normal-state-map (kbd "C-p") 'project-map)
+
+  (define-key project-map (kbd "p") 'counsel-projectile-switch-project)
+  (define-key project-map (kbd "d") 'counsel-projectile-find-dir)
+  (define-key project-map (kbd "g") 'magit)
+  (define-key project-map (kbd "/") 'counsel-projectile-ag)
+  (define-key project-map (kbd "t") 'util/test-project)
+#+END_SRC
+
+** Windows
+
+#+BEGIN_SRC emacs-lisp
+  (define-key evil-window-map (kbd "f") 'delete-other-windows)
+#+END_SRC
+
+** Files (Buffers)
+
+#+BEGIN_SRC emacs-lisp
+  (define-prefix-command 'file-map)
+  (define-key evil-normal-state-map (kbd "C-f") 'file-map)
+
+  (define-key file-map (kbd "f") 'counsel-projectile-find-file)
+  (define-key file-map (kbd "s") 'save-buffer)
+  (define-key file-map (kbd "r") 'util/rename-current-file)
+  (define-key file-map (kbd "d") 'util/delete-current-file)
+  (define-key file-map (kbd "o") 'counsel-switch-buffer)
+  (define-key file-map (kbd "/") 'swiper-isearch)
+  (define-key file-map (kbd "t") 'util/test-file)
 #+END_SRC
