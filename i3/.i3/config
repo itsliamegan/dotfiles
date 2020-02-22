@@ -11,7 +11,7 @@ default_border none
 bindsym $mod+Return exec urxvt
 
 # Open an app launcher.
-bindsym $mod+d exec rofi -matching fuzzy -theme solarized -show run
+bindsym $mod+r exec rofi -matching fuzzy -theme solarized -show run
 
 # Kill focused window.
 bindsym $mod+Shift+q kill
@@ -92,6 +92,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
+
+# Start xcape to allow Control to be used as Escape when pressed.
+exec --no-startup-id xcape
 
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
