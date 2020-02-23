@@ -1,7 +1,9 @@
 # If an external display is connected, disable laptop screen and
-# make external display primary.
-xrandr | grep "DP-2-1 connected" && (
-  xrandr --output eDP-1 --off --output DP-2-1 --primary
+# configure external displays.
+xrandr | grep "DP2-1 connected" && (
+  xrandr --output eDP1 --off
+  xrandr --output DP2-1 --primary --mode 2560x1440
+  xrandr --output DP2-2 --right-of DP2-1
 )
 
 . /etc/X11/Xsession
