@@ -152,11 +152,13 @@ some commands with =ivy= completion for =projectile=.
 
 ** =magit=
 
-=magit= is a wonderful interface for using git in Emacs. We also
-install =evil= bindings for it.
+=magit= is a wonderful interface for using git in Emacs. We install
+=evil= bindings for it and start the commit message in insert mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package magit)
+  (use-package magit
+    :config
+    (add-hook 'with-editor-mode-hook 'evil-insert-state))
   (use-package evil-magit
     :after magit)
 #+END_SRC
@@ -216,6 +218,18 @@ enable a mode for it.
     (add-hook 'ruby-mode-hook 'minitest-mode))
 #+END_SRC
 
+** Org
+
+Show pretty bullets instead of asteriks, and a downward arrow when a
+section has content.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org)
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook 'org-bullets-mode))
+#+END_SRC
 * Quality of Life
 
 ** Startup
