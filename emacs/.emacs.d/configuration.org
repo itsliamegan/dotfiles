@@ -481,6 +481,7 @@ Some might be defined later as well, so these are "shortcuts".
   (define-key evil-normal-state-map (kbd "C-p") 'project-map)
 
   (define-key project-map (kbd "p") 'counsel-projectile-switch-project)
+  (define-key project-map (kbd "f") 'counsel-projectile-find-file)
   (define-key project-map (kbd "d") 'counsel-projectile-find-dir)
   (define-key project-map (kbd "g") 'magit)
   (define-key project-map (kbd "/") 'counsel-projectile-ag)
@@ -499,11 +500,10 @@ Some might be defined later as well, so these are "shortcuts".
   (define-prefix-command 'file-map)
   (define-key evil-normal-state-map (kbd "C-f") 'file-map)
 
-  (define-key file-map (kbd "f") 'counsel-projectile-find-file)
+  (define-key file-map (kbd "f") 'counsel-switch-buffer)
   (define-key file-map (kbd "s") 'save-buffer)
   (define-key file-map (kbd "r") 'util/rename-current-file)
   (define-key file-map (kbd "d") 'util/delete-current-file)
-  (define-key file-map (kbd "o") 'counsel-switch-buffer)
   (define-key file-map (kbd "p") 'previous-buffer)
   (define-key file-map (kbd "n") 'next-buffer)
   (define-key file-map (kbd "/") 'swiper-isearch)
