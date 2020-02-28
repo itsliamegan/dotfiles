@@ -3,6 +3,9 @@
 # Install the necessary system packages.
 ./install_system_packages.sh
 
+# Install Ruby gems.
+./install_ruby_gems.sh
+
 # Remove any files that might conflict.
 rm ~/.bashrc
 
