@@ -100,7 +100,7 @@ exec --no-startup-id xcape
 exec --no-startup-id xcompmgr -n &
 
 # Set background to static image.
-exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/Alaska.jpg
+exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/alaska.jpg
 
 # Start system tray applications.
 exec --no-startup-id pasystray &
