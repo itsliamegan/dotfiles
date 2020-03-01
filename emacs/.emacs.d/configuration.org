@@ -437,8 +437,7 @@ spaces.
 * Keybindings
 
 Finally, we will define all the keybindings for the various shortcuts
-and commands that I use. Inspired heavily by Spacemacs and Doom, I've
-tried to be mnemonic and logical.
+and commands that I use.
 
 ** =which-key=
 
@@ -450,73 +449,24 @@ press a prefix key. It's very helpful for learning the bindings.
     :config
     (which-key-mode))
 #+END_SRC
-** Unbindings
-
-I'd like to get used to my custom bindings rather than these default
-Emacs bindings, so we unbind them.
+** Bindings
 
 #+BEGIN_SRC emacs-lisp
-  (global-unset-key (kbd "C-x C-s"))
-  (global-unset-key (kbd "C-x C-c"))
-  (global-unset-key (kbd "C-x o"))
-  (global-unset-key (kbd "C-x 1"))
-  (global-unset-key (kbd "C-x 2"))
-  (global-unset-key (kbd "C-x 3"))
-#+END_SRC
+  (evil-define-key 'normal 'global
+    (kbd "C-S-p") 'counsel-projectile-switch-project
+    (kbd "C-p") 'counsel-projectile-find-file
+    (kbd "C-S-f") 'counsel-projectile-ag
+    (kbd "C-f") 'swiper-isearch
 
-** General / Aliases
+    (kbd "C-,") 'previous-buffer
+    (kbd "C-.") 'next-buffer
 
-These commands are so useful that they get their own special bindings.
-Some might be defined later as well, so these are "shortcuts".
+    (kbd "C-x g") 'magit
 
-#+BEGIN_SRC emacs-lisp
-  (define-key evil-normal-state-map (kbd "C-s") 'save-buffer)
-  (define-key evil-normal-state-map (kbd "C-q") 'save-buffers-kill-terminal)
-#+END_SRC
+    (kbd "C-c t p") 'util/test-project
+    (kbd "C-c t f") 'util/test-file
 
-** Projects
-
-#+BEGIN_SRC emacs-lisp
-  (define-prefix-command 'project-map)
-  (define-key evil-normal-state-map (kbd "C-p") 'project-map)
-
-  (define-key project-map (kbd "p") 'counsel-projectile-switch-project)
-  (define-key project-map (kbd "f") 'counsel-projectile-find-file)
-  (define-key project-map (kbd "d") 'counsel-projectile-find-dir)
-  (define-key project-map (kbd "g") 'magit)
-  (define-key project-map (kbd "/") 'counsel-projectile-ag)
-  (define-key project-map (kbd "t") 'util/test-project)
-#+END_SRC
-
-** Windows
-
-#+BEGIN_SRC emacs-lisp
-  (define-key evil-window-map (kbd "f") 'delete-other-windows)
-#+END_SRC
-
-** Files (Buffers)
-
-#+BEGIN_SRC emacs-lisp
-  (define-prefix-command 'file-map)
-  (define-key evil-normal-state-map (kbd "C-f") 'file-map)
-
-  (define-key file-map (kbd "f") 'counsel-switch-buffer)
-  (define-key file-map (kbd "s") 'save-buffer)
-  (define-key file-map (kbd "r") 'util/rename-current-file)
-  (define-key file-map (kbd "d") 'util/delete-current-file)
-  (define-key file-map (kbd "p") 'previous-buffer)
-  (define-key file-map (kbd "n") 'next-buffer)
-  (define-key file-map (kbd "/") 'swiper-isearch)
-  (define-key file-map (kbd "t") 'util/test-file)
-#+END_SRC
-** Code
-
-#+BEGIN_SRC emacs-lisp
-  (define-key evil-normal-state-map (kbd "M-d") 'dumb-jump-go)
-
-  (define-prefix-command 'code-jump-map)
-  (define-key evil-normal-state-map (kbd "M-j") 'code-jump-map)
-
-  (define-key code-jump-map (kbd "c") 'avy-goto-char)
-  (define-key code-jump-map (kbd "l") 'avy-goto-line)
+    (kbd "M-d") 'dumb-jump-go
+    (kbd "M-j c") 'avy-goto-char
+    (kbd "M-j l") 'avy-goto-line)
 #+END_SRC
