@@ -4,7 +4,7 @@
 
 ** =package=
 
-Emacs has a built in package management solution called,
+Emacs has a built-in package management solution called,
 appropriately, =package=. We start by installing it and adding some
 repositories so that more packages can be downloaded. The first is the
 official GNU package repository, and the second, MELPA, is a popular
@@ -106,51 +106,60 @@ of sorts for editing text. We install =evil=, which emulates vim, and
 
 ** Fuzzy Finding
 
-=ivy= is a simple, minimal completion engine for many of Emacs' search
-prompts like =find-file= and =M-x=. If you've heard of =helm=, it's
-similar, but less overbearing, heavy, and has a far smaller surface
-area of functionality. For those and some other reasons, I prefer
-=ivy=. First, we install =ivy=, then set it to use fuzzy searching.
-
-=swiper= and =counsel= are just extensions for =ivy= that add its
-functionality to native Emacs functions
-
-=flx= provides fuzzy searching, but more importantly, =ivy= will use
-it to sort search results.
+=ido= is a built-in completion engine for Emacs. It provides fuzzy
+searching, so we turn that on, as well as enabling it in a few other
+places like the M-x menu.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ivy
+  (use-package ido
     :config
-    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
-    (ivy-mode))
+    (setq ido-enable-flex-matching t)
+    (setq ido-everywhere t)
+    (ido-mode))
 
-  (use-package swiper)
-  (use-package counsel
+  (use-package ido-vertical-mode
+    :after ido
     :config
-    (counsel-mode))
+    (ido-vertical-mode))
 
-  (use-package flx)
+  (use-package ido-completing-read+
+    :after ido
+    :config
+    (ido-ubiquitous-mode))
+
+  (use-package smex
+    :after ido
+    :config
+    (smex-initialize))
 #+END_SRC
 
-** =projectile=
+** Searching
 
-This is a project management library. I only use a few features from
-it, so I'm trying to find alternatives, but for now this is the best
-option. We install it as well as =counsel-projectile=, which provides
-some commands with =ivy= completion for =projectile=.
+We install =ag=, a way to use the silver searcher.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ag)
+#+END_SRC
+
+** Project Management
+
+=projectile= is a project management library. I only use a few
+features from it, so I'm trying to find alternatives, but for now this
+is the best option. We install, configure it to use =ido= for
+completion, set it to open the root directory when changing projects,
+and don't require the folder to be a project to take advantage of
+=projectile='s features.
 
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :config
-    (setq projectile-completion-system 'ivy))
-
-  (use-package counsel-projectile
-    :after projectile
-    :config
-    (counsel-projectile-mode))
+    (setq projectile-completion-system 'ido)
+    (setq projectile-switch-project-action 'projectile-dired)
+    (setq projectile-require-project-root nil)
+    (projectile-mode))
 #+END_SRC
 
-** =magit=
+** Git
 
 =magit= is a wonderful interface for using git in Emacs. We install
 =evil= bindings for it and start the commit message in insert mode.
@@ -158,31 +167,10 @@ some commands with =ivy= completion for =projectile=.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config
+    (setq magit-completing-read-function 'magit-ido-completing-read)
     (add-hook 'with-editor-mode-hook 'evil-insert-state))
   (use-package evil-magit
     :after magit)
-#+END_SRC
-
-** =dumb-jump=
-
-Jump to definition is a great feature of modern editors, and the
-=dumb-jump= package provides it. We install it and set it to use 'ivy
-for completion instead of a small popup.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package dumb-jump
-    :config
-    (setq dumb-jump-selector 'ivy)
-    (dumb-jump-mode))
-#+END_SRC
-
-** =avy=
-
-This package provides an alternate method to jump to a specific place
-in code without repeatedly using control movement.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package avy)
 #+END_SRC
 
 * Language-Specific Packages
@@ -449,24 +437,36 @@ press a prefix key. It's very helpful for learning the bindings.
     :config
     (which-key-mode))
 #+END_SRC
+** Unbindings
+
+Though I try to stick mostly to emacs keybindings, there are a few of
+of my custom ones that differ slightly that I'd like to get used to.
+We unbind the ones that I keep accidentally pressing here.
+
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "C-x C-s"))
+  (global-unset-key (kbd "C-x C-c"))
+#+END_SRC
+
 ** Bindings
 
 #+BEGIN_SRC emacs-lisp
   (evil-define-key 'normal 'global
-    (kbd "C-S-p") 'counsel-projectile-switch-project
-    (kbd "C-p") 'counsel-projectile-find-file
-    (kbd "C-S-f") 'counsel-projectile-ag
-    (kbd "C-f") 'swiper-isearch
+    (kbd "C-q") 'save-buffers-kill-terminal
+    (kbd "C-s") 'save-buffer
+    (kbd "C-S-f") 'projectile-ag
+    (kbd "C-f") 'isearch-forward
+    (kbd "C-r") 'query-replace
+    (kbd "C-S-r") 'projectile-replace
+    (kbd "C-S-p") 'projectile-switch-project
+    (kbd "C-p") 'projectile-find-file
 
     (kbd "C-,") 'previous-buffer
     (kbd "C-.") 'next-buffer
 
+    (kbd "M-x") 'smex
     (kbd "C-x g") 'magit
 
     (kbd "C-c t p") 'util/test-project
-    (kbd "C-c t f") 'util/test-file
-
-    (kbd "M-d") 'dumb-jump-go
-    (kbd "M-j c") 'avy-goto-char
-    (kbd "M-j l") 'avy-goto-line)
+    (kbd "C-c t f") 'util/test-file)
 #+END_SRC
