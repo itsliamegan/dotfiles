@@ -13,6 +13,12 @@ bindsym $mod+Return exec urxvt
 # Open an app launcher.
 bindsym $mod+r exec rofi -matching fuzzy -theme solarized -show run
 
+# Open Emacs
+bindsym $mod+e exec emacs
+
+# Open Firefox
+bindsym $mod+f exec firefox
+
 # Kill focused window.
 bindsym $mod+Shift+q kill
 
@@ -33,12 +39,6 @@ bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-
-# Toggle fullscreen.
-bindsym $mod+f fullscreen toggle
-
-# Toggle between horizontal and vertical splitting.
-bindsym $mod+e layout toggle split
 
 # Set workspace variables for use later.
 set $ws1 "1"
