@@ -107,20 +107,27 @@ of sorts for editing text. We install =evil=, which emulates vim, and
 ** Fuzzy Finding
 
 =ido= is a built-in completion engine for Emacs. It provides fuzzy
-searching, so we turn that on, as well as enabling it in a few other
-places like the M-x menu.
+searching, though it's not that good, so we replace it with =flx=.
+We also enable =ido= in other places like the M-x menu.
 
 #+BEGIN_SRC emacs-lisp
   (use-package ido
     :config
-    (setq ido-enable-flex-matching t)
-    (setq ido-everywhere t)
+    (setq ido-enable-flex-matching t
+          ido-everywhere t)
     (ido-mode))
 
   (use-package ido-vertical-mode
     :after ido
     :config
+    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
     (ido-vertical-mode))
+
+  (use-package flx-ido
+    :after ido
+    :config
+    (setq flx-ido-use-faces nil)
+    (flx-ido-mode))
 
   (use-package ido-completing-read+
     :after ido
@@ -361,6 +368,27 @@ Always reload buffers when the underlying file changes.
   (global-auto-revert-mode)
 #+END_SRC
 
+** Split Windows Vertically
+
+When Emacs creates a split, usually it creates it horizonally. Given
+that with 16:9 displays, I usually have more horizontal space than
+vertical, I'd rather create a vertical split by default.
+
+#+BEGIN_SRC emacs-lisp
+  (setq split-width-threshold 0
+        split-height-threshold nil)
+#+END_SRC
+
+** Colored Parentheses
+
+We install a package to color code matching parentheses, which while
+helpful in normal code, is especially helpful in Lisp languages.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimeters-mode))
+#+END_SRC
 * Visuals
 
 ** Theme
