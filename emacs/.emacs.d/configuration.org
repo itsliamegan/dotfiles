@@ -368,17 +368,6 @@ Always reload buffers when the underlying file changes.
   (global-auto-revert-mode)
 #+END_SRC
 
-** Split Windows Vertically
-
-When Emacs creates a split, usually it creates it horizonally. Given
-that with 16:9 displays, I usually have more horizontal space than
-vertical, I'd rather create a vertical split by default.
-
-#+BEGIN_SRC emacs-lisp
-  (setq split-width-threshold 0
-        split-height-threshold nil)
-#+END_SRC
-
 ** Colored Parentheses
 
 We install a package to color code matching parentheses, which while
