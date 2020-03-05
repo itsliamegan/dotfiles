@@ -368,16 +368,6 @@ Always reload buffers when the underlying file changes.
   (global-auto-revert-mode)
 #+END_SRC
 
-** Colored Parentheses
-
-We install a package to color code matching parentheses, which while
-helpful in normal code, is especially helpful in Lisp languages.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :config
-    (add-hook 'prog-mode-hook 'rainbow-delimeters-mode))
-#+END_SRC
 * Visuals
 
 ** Theme
