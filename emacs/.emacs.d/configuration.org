@@ -41,6 +41,7 @@ we define a few useful functions.
 
 #+BEGIN_SRC emacs-lisp
   (defun util/delete-current-file ()
+    "Delete the current file and kill the current buffer."
     (interactive)
     (delete-file (buffer-file-name))
     (kill-buffer))
@@ -51,6 +52,7 @@ we define a few useful functions.
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
   (defun util/rename-current-file (new-name)
+    "Rename the current file and switch to the new file."
     (interactive "FNew name: ")
     (let ((filename (buffer-file-name)))
       (when (buffer-modified-p)
