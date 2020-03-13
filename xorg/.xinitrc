@@ -6,4 +6,7 @@ xrandr | grep "DP2-1 connected" && (
   xrandr --output DP2-1 --right-of DP2-2 --mode 1920x1080
 )
 
+# Enable natural scrolling for the touchpad.
+xinput --set-prop "Synaptics TM3053-004" "libinput Natural Scrolling Enabled" 1
+
 . /etc/X11/Xsession

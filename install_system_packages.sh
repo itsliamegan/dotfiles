@@ -37,4 +37,5 @@ sudo apt install -y \
      xbacklight \
      xcape \
      xcompmgr \
+     xinput \
      xorg
