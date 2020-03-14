@@ -190,6 +190,18 @@ and don't require the folder to be a project to take advantage of
   (use-package markdown-mode)
 #+END_SRC
 
+** Org
+
+Show pretty bullets instead of asteriks, and a downward arrow when a
+section has content.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org)
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook 'org-bullets-mode))
+#+END_SRC
 ** YAML
 
 #+BEGIN_SRC emacs-lisp
@@ -215,17 +227,11 @@ enable a mode for it.
     (add-hook 'ruby-mode-hook 'minitest-mode))
 #+END_SRC
 
-** Org
-
-Show pretty bullets instead of asteriks, and a downward arrow when a
-section has content.
+** Rust
 
 #+BEGIN_SRC emacs-lisp
-  (use-package org)
-
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook 'org-bullets-mode))
+  (use-package rust-mode)
+  (use-package cargo)
 #+END_SRC
 * Quality of Life
 
