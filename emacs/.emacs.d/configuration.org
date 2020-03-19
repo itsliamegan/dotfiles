@@ -65,12 +65,26 @@ we define a few useful functions.
   (defun util/test-project ()
     "Test the current project."
     (interactive)
-    (cond ((eq major-mode 'ruby-mode) (minitest-verify-all))))
+    (cond ((eq major-mode 'crystal-mode) (util/test-crystal-project))
+	  ((eq major-mode 'ruby-mode) (minitest-verify-all))
+	  ((eq major-mode 'rust-mode) (cargo-process-test))))
+
+  (defun util/test-crystal-project ()
+    "Test a project written in Crystal."
+    (interactive)
+    (shell-command "crystal spec"))
 
   (defun util/test-file ()
     "Test the current file."
     (interactive)
-    (cond ((eq major-mode 'ruby-mode) (minitest-verify))))
+    (cond ((eq major-mode 'crystal-mode) (util/test-crystal-file))
+	  ((eq major-mode 'ruby-mode) (minitest-verify))
+	  ((eq major-mode 'rust-mode) (cargo-process-current-file-tests))))
+
+  (defun util/test-crystal-file ()
+    "Test a file written in Crystal."
+    (interactive)
+    (shell-command (concat "crystal spec " buffer-file-name)))
 
   (defun util/transparency (amount)
     "Set Emacs to be (100-AMOUNT)% transparent."
@@ -184,6 +198,12 @@ and don't require the folder to be a project to take advantage of
 
 * Language-Specific Packages
 
+** Crystal
+
+#+BEGIN_SRC emacs-lisp
+  (use-package crystal-mode)
+#+END_SRC
+
 ** Markdown
 
 #+BEGIN_SRC emacs-lisp
@@ -202,12 +222,6 @@ section has content.
     :config
     (add-hook 'org-mode-hook 'org-bullets-mode))
 #+END_SRC
-** YAML
-
-#+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode)
-#+END_SRC
-
 ** Ruby
 
 I use =chruby= to change Ruby versions, so we install that and tell it
@@ -233,6 +247,12 @@ enable a mode for it.
   (use-package rust-mode)
   (use-package cargo)
 #+END_SRC
+** YAML
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode)
+#+END_SRC
+
 * Quality of Life
 
 ** Startup
@@ -244,6 +264,15 @@ scratch =org-mode= buffer.
   (setq inhibit-splash-screen t
         initial-scratch-message nil
         initial-major-mode 'org-mode)
+#+END_SRC
+
+** Garbage Collection
+
+Emacs has a tiny (800KB!) default threshold before it will run garbage
+collection, so we increase that to 100MB.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold (* 100 1000 1000))
 #+END_SRC
 
 ** Bell
