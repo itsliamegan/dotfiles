@@ -1,5 +1,22 @@
 #+TITLE: Liam's Emacs Configuration
 
+* Startup and Garbage Collection
+
+Emacs has a tiny (800KB!) default threshold before it will run garbage
+collection. This can both slow down startup and cause slowdowns during
+use. We increase it to the maximum number at startup, but set it back
+down to a reasonable 50MB afterwards.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)
+
+  (add-hook 'emacs-startup-hook
+    `(lambda ()
+       (setq gc-cons-threshold (* 50 1000 1000)
+             gc-cons-percentage 0.1)))
+#+END_SRC
+
 * Package Management
 
 ** =package=
@@ -21,17 +38,21 @@ community driven repository.
 
 =package= provides an interface for installing packages, but it
 becomes tedious to manage for multiple files. Instead, I use the
-=use-package= macro to install and configure packages. We need to
-install use-package and configure it to always "ensure" packages are
-installed if they're not already.
+=use-package= macro to install and configure packages. We first
+=use-package=, then configure it in various ways for usability and to
+speed up startup.
 
 #+BEGIN_SRC emacs-lisp
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
 
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
+  (setq use-package-always-ensure t
+        use-package-expand-minimally t
+	use-package-verbose nil)
+
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 * Utility Functions
@@ -264,15 +285,6 @@ scratch =org-mode= buffer.
   (setq inhibit-splash-screen t
         initial-scratch-message nil
         initial-major-mode 'org-mode)
-#+END_SRC
-
-** Garbage Collection
-
-Emacs has a tiny (800KB!) default threshold before it will run garbage
-collection, so we increase that to 100MB.
-
-#+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold (* 100 1000 1000))
 #+END_SRC
 
 ** Bell
