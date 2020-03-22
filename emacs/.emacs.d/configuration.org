@@ -1,22 +1,5 @@
 #+TITLE: Liam's Emacs Configuration
 
-* Startup and Garbage Collection
-
-Emacs has a tiny (800KB!) default threshold before it will run garbage
-collection. This can both slow down startup and cause slowdowns during
-use. We increase it to the maximum number at startup, but set it back
-down to a reasonable 50MB afterwards.
-
-#+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold most-positive-fixnum
-        gc-cons-percentage 0.6)
-
-  (add-hook 'emacs-startup-hook
-    `(lambda ()
-       (setq gc-cons-threshold (* 50 1000 1000)
-             gc-cons-percentage 0.1)))
-#+END_SRC
-
 * Package Management
 
 ** =package=
@@ -55,24 +38,41 @@ speed up startup.
     (require 'use-package))
 #+END_SRC
 
+* Startup and Garbage Collection
+
+Emacs has a tiny (800KB!) default threshold before it will run garbage
+collection. This can both slow down startup and cause slowdowns during
+use. We increase it to the maximum number at startup, but set it back
+down to a reasonable 50MB afterwards.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)
+
+  (add-hook 'emacs-startup-hook
+    `(lambda ()
+       (setq gc-cons-threshold (* 50 1000 1000)
+             gc-cons-percentage 0.1)))
+#+END_SRC
+
 * Utility Functions
 
 To get them out of the way and in case we need to use them later, here
 we define a few useful functions.
 
 #+BEGIN_SRC emacs-lisp
-  (defun util/delete-current-file ()
+  (defun delete-current-file ()
     "Delete the current file and kill the current buffer."
     (interactive)
     (delete-file (buffer-file-name))
     (kill-buffer))
 
-  (defun util/kill-other-buffers ()
+  (defun kill-all-other-buffers ()
     "Kill all buffers other than the current."
     (interactive)
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 
-  (defun util/rename-current-file (new-name)
+  (defun rename-current-file (new-name)
     "Rename the current file and switch to the new file."
     (interactive "FNew name: ")
     (let ((filename (buffer-file-name)))
@@ -83,31 +83,43 @@ we define a few useful functions.
       (find-file new-name)
       (message "Renamed '%s' to '%s'" filename new-name)))
 
-  (defun util/test-project ()
+  (defun test-project ()
     "Test the current project."
     (interactive)
-    (cond ((eq major-mode 'crystal-mode) (util/test-crystal-project))
+    (cond ((eq major-mode 'crystal-mode) (test-crystal-project))
+          ((eq major-mode 'js-mode) (test-js-project))
 	  ((eq major-mode 'ruby-mode) (minitest-verify-all))
 	  ((eq major-mode 'rust-mode) (cargo-process-test))))
 
-  (defun util/test-crystal-project ()
+  (defun test-crystal-project ()
     "Test a project written in Crystal."
     (interactive)
     (shell-command "crystal spec"))
 
-  (defun util/test-file ()
+  (defun test-js-project ()
+    "Test a project written in JavaScript."
+    (interactive)
+    (shell-command "npm run test"))
+
+  (defun test-file ()
     "Test the current file."
     (interactive)
-    (cond ((eq major-mode 'crystal-mode) (util/test-crystal-file))
+    (cond ((eq major-mode 'crystal-mode) (test-crystal-file))
+          ((eq major-mode 'js-mode) (test-js-file))
 	  ((eq major-mode 'ruby-mode) (minitest-verify))
 	  ((eq major-mode 'rust-mode) (cargo-process-current-file-tests))))
 
-  (defun util/test-crystal-file ()
+  (defun test-crystal-file ()
     "Test a file written in Crystal."
     (interactive)
     (shell-command (concat "crystal spec " buffer-file-name)))
 
-  (defun util/transparency (amount)
+  (defun test-js-file ()
+    "Test a file written in JavaScript."
+    (interactive)
+    (shell-command (concat "npm run test " buffer-file-name)))
+
+  (defun transparency (amount)
     "Set Emacs to be (100-AMOUNT)% transparent."
     (interactive "nTransparency Amount: ")
     (set-frame-parameter (selected-frame) 'alpha amount))
@@ -197,9 +209,10 @@ and don't require the folder to be a project to take advantage of
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :config
-    (setq projectile-completion-system 'ido)
-    (setq projectile-switch-project-action 'projectile-dired)
-    (setq projectile-require-project-root nil)
+    (setq projectile-completion-system 'ido
+          projectile-switch-project-action 'projectile-dired
+          projectile-require-project-root nil)
+    (add-to-list 'projectile-globally-ignored-directories "node_modules")
     (projectile-mode))
 #+END_SRC
 
@@ -223,6 +236,18 @@ and don't require the folder to be a project to take advantage of
 
 #+BEGIN_SRC emacs-lisp
   (use-package crystal-mode)
+#+END_SRC
+
+** Go
+
+#+BEGIN_SRC emacs-lisp
+  (use-package go-mode)
+#+END_SRC
+
+** JavaScript
+
+#+BEGIN_SRC emacs-lisp
+  (setq js-indent-level 2)
 #+END_SRC
 
 ** Markdown
@@ -421,20 +446,18 @@ Always reload buffers when the underlying file changes.
 
 ** Theme
 
-The biggest visual change is the theme. As of now, I use
-=solarized-dark=, mostly because I can also configure everything in
-Xorg to use the same colors. I like highlighting the modeline a
-grayish-white color, so we enable that. By default, solarized also
-changes the font face and size of headlines in org mode, which I don't
-like, so we disable it.
+The biggest visual change we start with is installing a theme. I like
+dark, high contrast themes where the background is pure black, and
+there don't seem to be that many good looking ones. =ujelly= is the
+best one that I've found. We install it and also tell =custom=, the
+mechanism for theming and customization in Emacs, to trust all themes
+by default.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package solarized-theme
+  (use-package ujelly-theme
     :config
-    (setq solarized-high-contrast-mode-line t
-          solarized-use-variable-pitch nil
-          solarized-scale-org-headlines nil)
-    (load-theme 'solarized-dark t))
+    (setq custom-safe-themes t)
+    (load-theme 'ujelly))
 #+END_SRC
 
 ** Remove Bars
@@ -445,16 +468,6 @@ I find the graphical bars clutter, so here we remove them.
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
-#+END_SRC
-
-** Highlight Line
-
-I find highlighting the current line helpful for finding the point,
-and Emacs provides built-in functionality to do just that, so here we
-enable it.
-
-#+BEGIN_SRC emacs-lisp
-  (global-hl-line-mode)
 #+END_SRC
 
 ** Whitespace
@@ -523,6 +536,8 @@ We unbind the ones that I keep accidentally pressing here.
     (kbd "M-x") 'smex
     (kbd "C-x g") 'magit
 
-    (kbd "C-c t p") 'util/test-project
-    (kbd "C-c t f") 'util/test-file)
+    (kbd "M-j") 'imenu
+
+    (kbd "C-c t p") 'test-project
+    (kbd "C-c t f") 'test-file)
 #+END_SRC
