@@ -197,6 +197,15 @@ We install =ag=, a way to use the silver searcher.
   (use-package ag)
 #+END_SRC
 
+** Jump to Definition
+
+We install =dumb-jump= to be able to jump to the definition of a
+symbol.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump)
+#+END_SRC
+
 ** Project Management
 
 =projectile= is a project management library. I only use a few
@@ -506,6 +515,14 @@ press a prefix key. It's very helpful for learning the bindings.
     :config
     (which-key-mode))
 #+END_SRC
+** =general=
+
+=general= is a package which makes binding keys less repetitive.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package general)
+#+END_SRC
+
 ** Unbindings
 
 Though I try to stick mostly to emacs keybindings, there are a few of
@@ -519,25 +536,47 @@ We unbind the ones that I keep accidentally pressing here.
 
 ** Bindings
 
-#+BEGIN_SRC emacs-lisp
-  (evil-define-key 'normal 'global
-    (kbd "C-q") 'save-buffers-kill-terminal
-    (kbd "C-s") 'save-buffer
-    (kbd "C-S-f") 'projectile-ag
-    (kbd "C-f") 'isearch-forward
-    (kbd "C-r") 'query-replace
-    (kbd "C-S-r") 'projectile-replace
-    (kbd "C-S-p") 'projectile-switch-project
-    (kbd "C-p") 'projectile-find-file
+ #+BEGIN_SRC emacs-lisp
+   (general-def
+     :keymaps 'override
+     :states 'normal
+     :prefix "SPC"
 
-    (kbd "C-,") 'previous-buffer
-    (kbd "C-.") 'next-buffer
+     "SPC" 'smex
+     "q" 'save-buffers-kill-terminal
+     "g" 'magit
 
-    (kbd "M-x") 'smex
-    (kbd "C-x g") 'magit
+     "h a" 'apropros-command
+     "h k" 'describe-key
+     "h f" 'describe-function
+     "h v" 'describe-variable
 
-    (kbd "M-j") 'imenu
+     "t p" 'test-project
+     "t f" 'test-file
 
-    (kbd "C-c t p") 'test-project
-    (kbd "C-c t f") 'test-file)
-#+END_SRC
+     "p p" 'projectile-switch-project
+     "p f" 'projectile-find-file
+     "p S" 'projectile-ag
+     "p R" 'projectile-replace
+
+     "w s v" 'split-window-right
+     "w s h" 'split-window-below
+     "w f" 'delete-other-windows
+     "w h" 'evil-window-left
+     "w j" 'evil-window-down
+     "w k" 'evil-window-up
+     "w l" 'evil-window-right
+
+     "f f" 'find-file
+     "f s" 'save-buffer
+     "f S" 'isearch-forward
+     "f R" 'query-replace
+
+     "b b" 'switch-buffer
+     "b k" 'kill-buffer
+     "b p" 'previous-buffer
+     "b n" 'next-buffer
+
+     "c j" 'imenu
+     "c d" 'dumb-jump-go)
+ #+END_SRC
