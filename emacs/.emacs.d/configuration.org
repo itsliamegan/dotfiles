@@ -302,6 +302,14 @@ enable a mode for it.
   (use-package rust-mode)
   (use-package cargo)
 #+END_SRC
+** TypeScript
+
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :config
+    (setq typescript-indent-level 2))
+#+END_SRC
+
 ** YAML
 
 #+BEGIN_SRC emacs-lisp
