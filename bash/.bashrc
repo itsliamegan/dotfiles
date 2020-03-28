@@ -13,6 +13,11 @@ addtopath /usr/local/sbin
 
 export PATH
 
+# Aliases.
+
+alias yt2mp4="youtube-dl --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
+alias yt2mp3="youtube-dl --extract-audio --audio-format mp3"
+
 # Setup chruby to change ruby versions.
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
