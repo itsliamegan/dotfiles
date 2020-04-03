@@ -13,10 +13,20 @@ addtopath /usr/local/sbin
 
 export PATH
 
+# Environment variables.
+
+export EDITOR=vim
+
 # Aliases.
 
 alias yt2mp4="youtube-dl --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
 alias yt2mp3="youtube-dl --extract-audio --audio-format mp3"
+
+# Disable C-s and others from stopping/resuming program output
+stty sane
+stty stop ""
+stty start ""
+stty werase ""
 
 # Setup chruby to change ruby versions.
 source /usr/local/share/chruby/chruby.sh

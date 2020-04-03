@@ -7,7 +7,6 @@ sudo apt install -y \
      build-essential \
      bzip2 \
      curl \
-     emacs \
      feh \
      firefox \
      fonts-inconsolata \
@@ -26,7 +25,6 @@ sudo apt install -y \
      pulseaudio \
      rofi \
      rxvt-unicode \
-     silversearcher-ag \
      stow \
      sudo \
      tar \
@@ -35,7 +33,6 @@ sudo apt install -y \
      vim \
      wget \
      xbacklight \
-     xcape \
      xcompmgr \
      xinput \
      xorg

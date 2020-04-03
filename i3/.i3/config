@@ -13,9 +13,6 @@ bindsym $mod+Return exec urxvt
 # Open an app launcher.
 bindsym $mod+r exec rofi -matching fuzzy -theme solarized -show run
 
-# Open Emacs
-bindsym $mod+e exec emacs
-
 # Open Firefox
 bindsym $mod+f exec firefox
 
@@ -92,9 +89,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
-
-# Start xcape to allow Control to be used as Escape when pressed.
-exec --no-startup-id xcape
 
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
