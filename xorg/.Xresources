@@ -3,7 +3,7 @@ xft*antialias: true
 
 ! URxvt.
 urxvt*scrollBar: false
-urxvt*font: xft:Inconsolata:size=20
+urxvt*font: xft:Inconsolata:size=24
 
 ! Emacs.
 emacs*font: Inconsolata-24
