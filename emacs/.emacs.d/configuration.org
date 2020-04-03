@@ -88,7 +88,7 @@ we define a few useful functions.
     (interactive)
     (cond ((eq major-mode 'crystal-mode) (test-crystal-project))
           ((eq major-mode 'js-mode) (test-js-project))
-	  ((eq major-mode 'ruby-mode) (minitest-verify-all))
+	  ((eq major-mode 'ruby-mode) (rspec-verify-all))
 	  ((eq major-mode 'rust-mode) (cargo-process-test))))
 
   (defun test-crystal-project ()
@@ -106,7 +106,7 @@ we define a few useful functions.
     (interactive)
     (cond ((eq major-mode 'crystal-mode) (test-crystal-file))
           ((eq major-mode 'js-mode) (test-js-file))
-	  ((eq major-mode 'ruby-mode) (minitest-verify))
+	  ((eq major-mode 'ruby-mode) (rspec-verify))
 	  ((eq major-mode 'rust-mode) (cargo-process-current-file-tests))))
 
   (defun test-crystal-file ()
@@ -283,17 +283,15 @@ I use =chruby= to change Ruby versions, so we install that and tell it
 to use the correct Ruby version from whatever =.ruby-version= file is
 correct according to =chruby=.
 
-I also use =minitest= to test my Ruby projects, so we install and
-enable a mode for it.
+I also use =rspec= to test my Ruby projects, so we install a mode for
+it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package chruby
     :config
     (chruby-use-corresponding))
 
-  (use-package minitest
-    :config
-    (add-hook 'ruby-mode-hook 'minitest-mode))
+  (use-package rspec-mode)
 #+END_SRC
 
 ** Rust
@@ -533,13 +531,23 @@ press a prefix key. It's very helpful for learning the bindings.
 
 ** Unbindings
 
-Though I try to stick mostly to emacs keybindings, there are a few of
+Though I try to stick mostly to Emacs keybindings, there are a few of
 of my custom ones that differ slightly that I'd like to get used to.
 We unbind the ones that I keep accidentally pressing here.
 
 #+BEGIN_SRC emacs-lisp
-  (global-unset-key (kbd "C-x C-s"))
   (global-unset-key (kbd "C-x C-c"))
+  (global-unset-key (kbd "C-x C-s"))
+  (global-unset-key (kbd "C-x C-f"))
+  (global-unset-key (kbd "C-x d"))
+  (global-unset-key (kbd "C-h a"))
+  (global-unset-key (kbd "C-h k"))
+  (global-unset-key (kbd "C-h f"))
+  (global-unset-key (kbd "C-h v"))
+  (global-unset-key (kbd "C-x o"))
+  (global-unset-key (kbd "C-x 1"))
+  (global-unset-key (kbd "C-x 2"))
+  (global-unset-key (kbd "C-x 3"))
 #+END_SRC
 
 ** Bindings
@@ -559,13 +567,11 @@ We unbind the ones that I keep accidentally pressing here.
      "h f" 'describe-function
      "h v" 'describe-variable
 
-     "t p" 'test-project
-     "t f" 'test-file
-
      "p p" 'projectile-switch-project
      "p f" 'projectile-find-file
      "p S" 'projectile-ag
      "p R" 'projectile-replace
+     "p t" 'test-project
 
      "w s v" 'split-window-right
      "w s h" 'split-window-below
@@ -575,12 +581,15 @@ We unbind the ones that I keep accidentally pressing here.
      "w k" 'evil-window-up
      "w l" 'evil-window-right
 
+     "d d" 'dired
+
      "f f" 'find-file
      "f s" 'save-buffer
      "f S" 'isearch-forward
      "f R" 'query-replace
+     "f t" 'test-file
 
-     "b b" 'switch-buffer
+     "b b" 'switch-to-buffer
      "b k" 'kill-buffer
      "b p" 'previous-buffer
      "b n" 'next-buffer
