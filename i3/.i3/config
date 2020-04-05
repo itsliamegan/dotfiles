@@ -13,6 +13,9 @@ bindsym $mod+Return exec urxvt
 # Open an app launcher.
 bindsym $mod+r exec rofi -matching fuzzy -theme solarized -show run
 
+# Open a terminal running gitsh.
+bindsym $mod+g exec urxvt -e gitsh
+
 # Open Firefox
 bindsym $mod+f exec firefox
 
