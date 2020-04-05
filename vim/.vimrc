@@ -44,7 +44,8 @@ set smartcase
 " Show dotfiles in ctrlp.
 let g:ctrlp_show_hidden = 1
 
-" Ignore certain folders in ctrlp
+" Ignore certain files and directories in ctrlp
+set wildignore+=*.swp
 let g:ctrlp_custom_ignore = 'node_modules\|\.git'
 
 " Set color scheme.
