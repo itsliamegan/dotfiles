@@ -2,19 +2,6 @@
 # nothing else.
 PS1="${debian_chroot:+($debian_chroot)}\[\033[32m\][\w]\[\033[0m\] $ "
 
-# When starting, cd to the last opened directory. When exiting, store that
-# directory in a file to use on the next open.
-
-if [ -f ~/.last-opened-directory ]; then
-  cd $(cat ~/.last-opened-directory)
-fi
-
-function store-last-opened-directory {
-  pwd > ~/.last-opened-directory
-}
-
-trap store-last-opened-directory EXIT
-
 # Path modifications.
 
 function addtopath {
