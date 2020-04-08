@@ -13,10 +13,10 @@ bindsym $mod+Return exec urxvt
 # Open an app launcher.
 bindsym $mod+r exec rofi -matching fuzzy -theme solarized -show run
 
-# Open a terminal running gitsh.
-bindsym $mod+g exec urxvt -e gitsh
+# Open Emacs.
+bindsym $mod+e exec emacs
 
-# Open Firefox
+# Open Firefox.
 bindsym $mod+f exec firefox
 
 # Kill focused window.
@@ -93,15 +93,20 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
 
+# Start xcape to allow Control to be used as Escape when pressed but as normal
+# Control when held.
+exec --no-startup-id xcape
+
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
 
 # Set background to static image.
-exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/morning-mist.jpg
+exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/romania.jpg
 
 # Start system tray applications.
 exec --no-startup-id pasystray &
 exec --no-startup-id nm-applet &
+exec --no-startup-id blueman-applet &
 
 # Status bar config.
 bar {

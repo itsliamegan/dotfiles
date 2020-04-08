@@ -1,0 +1,495 @@
+#+TITLE: Liam's Emacs Configuration
+
+* Startup
+
+** Garbage Collection
+
+Emacs has a tiny (800KB!) default threshold before it will run garbage
+collection. This can both slow down startup and cause slowdowns during use. I
+increase it to a massive number at startup to prevent any slowness, but set it
+back down to a reasonable 50MB afterwards to prevent any stuttering.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)
+
+  (add-hook 'emacs-startup-hook
+    `(lambda ()
+       (setq gc-cons-threshold (* 50 1000 1000)
+             gc-cons-percentage 0.1)))
+#+END_SRC
+
+** Scratch Buffer
+
+I dislike the default starting screen, so instead I start on a scratch buffer. I
+never find the Lisp buffer useful, though, so I start Emacs in an =org-mode=
+buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t
+        initial-scratch-message nil
+        initial-major-mode 'org-mode)
+#+END_SRC
+
+* Utility Functions
+
+In case I need to use them later, here I define a few useful functions.
+
+#+BEGIN_SRC emacs-lisp
+  (defun delete-current-file ()
+    "Delete the current file and kill the current buffer."
+    (interactive)
+    (let ((filename (buffer-file-name)))
+      (delete-file (buffer-file-name))
+      (kill-buffer)
+      (message "Deleted '%s'" filename)))
+
+  (defun rename-current-file (new-name)
+    "Rename the current file and switch to the new file."
+    (interactive "FNew name: ")
+    (let ((filename (buffer-file-name)))
+      (when (buffer-modified-p)
+        (save-buffer))
+      (rename-file filename new-name t)
+      (kill-buffer (current-buffer))
+      (find-file new-name)
+      (message "Renamed '%s' to '%s'" filename new-name)))
+#+END_SRC
+
+* Package Management
+
+** =package=
+
+Emacs has a built-in package management solution called, appropriately,
+=package=. I start by installing it and adding some repositories so that more
+packages can be downloaded. The first is the official GNU package repository,
+the second, MELPA, is a popular community driven repository, and the third is
+the repository for =org-mode=.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (package-initialize)
+#+END_SRC
+
+** =use-package=
+
+=package= provides an interface for installing packages, but it becomes tedious
+to manage as you install more packages. Instead, I use the =use-package= macro to
+install and configure packages. I first install =use-package=, then configure it
+in various ways for usability and to speed up startup.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (require 'use-package-ensure)
+
+  (setq use-package-always-ensure t
+        use-package-expand-minimally t
+        use-package-verbose nil)
+#+END_SRC
+
+* Quality of Life / Small Tweaks
+
+** Spaces Instead of Tabs
+
+I use 2 spaces instead of tabs for indentation.
+
+#+BEGIN_SRC emacs-lisp
+  (setq indent-tabs-mode nil
+        tab-width 2
+        tab-stop-list (number-sequence 2 60 2))
+#+END_SRC
+
+** Delete Trailing Whitespace
+
+Trailing whitespace is annoying, so I delete it on save.
+
+#+BEGIN_SRC
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+** Yes and No
+
+Emacs often asks “yes” or “no” questions, but unlike most other programs,
+doesn't accept “y” and “n” as answers. I alias the predicate function that
+checks this to accept “y” or “n” as well.
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Treat CamelCase as Separate Words
+
+I find myself often wanting to change just part of a CamelCase word, so I enable
+subword mode, which treats each part in a mixed case word as a separate word.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'prog-mode-hook 'subword-mode)
+#+END_SRC
+
+** Follow Symlinks
+
+Emacs usually asks for confirmation if you want to follow a symlink, but I
+always want to transparently follow it, so we tell Emacs to just go ahead and
+follow the link without confirmation.
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
+** Single Space After Periods
+
+Since it's the 21st century, I use a single space after periods to indicate the
+end of a sentence.
+
+#+BEGIN_SRC emacs-lisp
+  (setq sentence-end-double-space nil)
+#+END_SRC
+
+** Newlines
+
+If I save a file that doesn't end with a newline, append one.
+
+#+BEGIN_SRC emacs-lisp
+  (setq require-final-newline t)
+#+END_SRC
+
+** Refresh Buffers When Files Change
+
+Sometimes a file can be changed outside of Emacs, but I want to make sure that
+the buffer never gets out of sync from what the actual file contents are. When
+files change on disk, I automatically refresh their contents.
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode)
+#+END_SRC
+
+** Remove Audio/Visual Bell
+
+By default, Emacs (and terminals in general) play a “bell” sound when an
+operation is not possible or an error occurs. Emacs provides a setting to
+disable it, but it’s then replaced by a “flash” of sorts, which I also don’t
+like. Instead, when Emacs tries to ring the bell, we do nothing.
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
+** Line Length
+
+Though there is plenty of debate about this, I find that a good limit for lines
+is 80 characters. This allows me to have a side-by-side split on my 1440p
+monitor and be able to see mostly everything without wrapping.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default fill-column 80)
+#+END_SRC
+
+** Yank At Point
+
+I often use the mouse (gasp!) to paste things from the browser, but when I do,
+the text is pasted to where my mouse cursor is, rather than where the point is.
+Instead, I set it to past where the point is.
+
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-yank-at-point t)
+#+END_SRC
+
+** Backups and Auto Saves
+
+By default, Emacs leaves backups and auto save files scattered across the
+filesystem. I don't like the clutter this creates, so instead I save them to
+/tmp, which is really where those kinds of files belong.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
+* Visuals
+
+** Theme
+
+The biggest visual change is the theme. As of now, I use solarized-dark, mostly
+because I can also configure everything else to use the same colors. I like
+highlighting the modeline a grayish-white color, so I enable that. By default,
+solarized also changes the font face and size of headlines in org mode, which I
+don’t like, so I disable it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package solarized-theme
+    :config
+    (setq solarized-high-contrast-mode-line t
+          solarized-use-variable-pitch nil
+          solarized-scale-org-headlines nil)
+    (load-theme 'solarized-dark t))
+#+END_SRC
+
+** Syntax Highlighting
+
+Ensure syntax highlighting is always enabled in all buffers.
+
+#+BEGIN_SRC emacs-lisp
+  (global-font-lock-mode)
+#+END_SRC
+** Remove Graphical Bars
+
+The graphical menu bars just take up space, so I remove them.
+
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (set-window-scroll-bars (minibuffer-window) nil nil)
+#+END_SRC
+
+** Highlight Whitespace
+
+I use the =whitespace= package to highlight undesirable whitespace - tabs,
+and characters past 80.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package whitespace
+    :config
+    (setq whitespace-style '(face lines-tail tabs))
+    (global-whitespace-mode))
+#+END_SRC
+** Highlight Current Line
+
+I find highlighting the current line helpful for finding the point, so I enable a
+minor mode for that.
+
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode)
+#+END_SRC
+** Show Matching Parentheses
+
+I like highlighting the matching pair of parentheses as well as highlighting the
+whole expression with no delay, so the expression is highlighted immediately. By
+default, though, the highlighted expression is bold, which is a little
+overwhelming, so I set it to use the normal font weight.
+
+#+BEGIN_SRC emacs-lisp
+  (setq show-paren-delay 0
+        show-paren-style 'expression)
+  (set-face-attribute 'show-paren-match nil :weight 'normal)
+  (add-hook 'prog-mode-hook 'show-paren-mode)
+#+END_SRC
+
+** Hide Minor Modes in Modeline
+
+I don’t like seeing all the minor modes in the modeline, so I use the =minions=
+package to hide all of them. By default, the package uses the final parenthesis
+to make a smilie face, but I don’t want that, so I set the delimiters of the
+mode to nothing, since only the major mode will ever be shown.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package minions
+    :config
+    (setq minions-mode-line-lighter ""
+          minions-mode-line-delimiters '("" . ""))
+    (minions-mode))
+#+END_SRC
+
+* Major Changes
+
+** =evil-mode=
+
+I’m used with (and fond of) vim’s “language” of sorts for editing text, so I
+install =evil-mode= to emulate it. I also install a few useful text objects, and
+=evil-collection= to add =evil-mode= compatibility to a few modes.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode))
+  
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+  (use-package evil-surround
+    :after evil
+    :config
+    (global-evil-surround-mode))
+
+  (use-package evil-args
+    :after evil)
+#+END_SRC
+
+** Projects
+
+I find myself looking for smaller alternatives to =projectile=, but right now it
+does everything I need (and much more), so I begrudgingly use it. I set it to
+use =ido=, as configured below. Rather than having to select a file when
+switching projects, I like to open the project in =dired=. I also ignore some
+vendor directories, so they don't register as project files.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :config
+    (setq projectile-completion-system 'ido
+          projectile-switch-project-action 'projectile-dired)
+    (add-to-list 'projectile-globally-ignored-directories "node_modules")
+    (projectile-mode))
+#+END_SRC
+
+** Git
+=magit= is a wonderful interface for using git in Emacs. I install evil bindings
+for it. I also like to start the commit message in insert mode since it saves me
+a keystroke, and I'm already in "text mode" in my brain when I'm writing a
+commit message.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :config
+    (add-hook 'with-editor-mode-hook 'evil-insert-state))
+
+  (use-package evil-magit
+    :after magit)
+#+END_SRC
+
+** Fuzzy Finding
+
+I've tried both =ido= and =ivy=, and although =ivy= has some nicer features and
+adds interactivity to more things (like =swiper=), I can't get fuzzy matching to
+match as nicely as I want. For now, I use =ido= with =flx= for fuzzy matching,
+and =smex= to both integrate =ido= with =M-x= as well as improve the =M-x= menu
+in general. I also like seeing the matches vertically rather than horizontally,
+so I use =ido-vertical-mode=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ido
+    :config
+    (setq ido-enable-flex-matching t
+          ido-everywhere t)
+    (ido-mode))
+
+  (use-package ido-vertical-mode
+    :after ido
+    :config
+    (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+    (ido-vertical-mode))
+
+  (use-package flx-ido
+    :after ido
+    :config
+    (setq flx-ido-use-faces nil)
+    (flx-ido-mode))
+
+  (use-package ido-completing-read+
+    :after ido
+    :config
+    (ido-ubiquitous-mode))
+
+  (use-package smex
+    :after ido
+    :config
+    (smex-initialize))
+#+END_SRC
+
+** Autocomplete
+
+For basic autocomplete, I install =auto-complete=. I tried setting up =company=,
+but it conflicts with =yasnippet= if I want to use =<tab>= for both actions.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :config
+    (ac-config-default)
+    (add-hook 'prog-mode-hook 'auto-complete-mode))
+#+END_SRC
+
+** Snippets
+
+Yet another "fancy editor feature that I thought I didn't need until I tried",
+snippets are achieved with the =yasnippet= package.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :config
+    (yas-global-mode))
+#+END_SRC
+
+** Error Checking
+
+I usually disable most of the linting features, but I flub language syntax
+enough that the syntax errors are useful.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :config
+    (setq-default flycheck-disabled-checkers '(ruby-reek))
+    (global-flycheck-mode))
+#+END_SRC
+* Language-Specific Packages
+
+** Markdown
+
+I sometimes use Markdown rather than Org (gasp!) for plaintext editing, so I
+install a mode to handle that.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode)
+#+END_SRC
+
+** Ruby
+
+I =chruby= to change ruby versions and =rspec= for testing.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package chruby
+    :config
+    (chruby-use-corresponding))
+
+  (use-package rspec-mode)
+#+END_SRC
+* Keybindings
+
+** =which-key=
+
+=which-key= is a very useful package to show a "cheat sheet" of sorts for
+keymappings when pressing a prefix.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :config
+    (which-key-mode))
+#+END_SRC
+
+** Bindings
+
+#+BEGIN_SRC emacs-lisp
+  (evil-define-key nil evil-inner-text-objects-map
+    "a" 'evil-inner-arg)
+
+  (evil-define-key nil evil-outer-text-objects-map
+    "a" 'evil-outer-arg)
+
+  (evil-define-key 'normal
+    "L" 'evil-forward-arg
+    "H" 'evil-backward-arg
+    "K" 'evil-jump-out-args)
+
+  (evil-define-key 'motion
+    "L" 'evil-forward-arg
+    "H" 'evil-backward-arg)
+    
+  (evil-define-key 'normal 'global
+    (kbd "C-p") 'projectile-find-file
+    (kbd "M-p") 'projectile-switch-project
+
+    (kbd "M-x") 'smex
+    (kbd "C-x g") 'magit)
+#+END_SRC
