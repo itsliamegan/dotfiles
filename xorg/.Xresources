@@ -8,37 +8,49 @@ urxvt*font: xft:Inconsolata:size=24
 ! Emacs.
 emacs*font: Inconsolata-24
 
-! Colors.
+! Solarized base colors.
 
-#define black         #000000
-#define white         #ffffff
-#define grey          #888888
-#define dark_grey     #444444
-#define red           #de5577
-#define green         #99ad6a
-#define yellow        #fad07a
-#define blue          #447799
-#define purple        #aa759f
-#define blue_green    #75b5aa
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
 
-*.foreground:     white
-*.background:     black
-*.cursorColor:    white
+! Solarized dark colors.
 
-*.color0:         black
-*.color1:         red
-*.color2:         green
-*.color3:         yellow
-*.color4:         blue
-*.color5:         purple
-*.color6:         blue_green
-*.color7:         grey
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
 
-*.color8:         dark_grey
-*.color9:         red
-*.color10:        green
-*.color11:        yellow
-*.color12:        blue
-*.color13:        purple
-*.color14:        blue_green
-*.color15:        white
+*background:              S_base03
+*foreground:              S_base0
+*fading:                  40
+*fadeColor:               S_base03
+*cursorColor:             S_base1
+*pointerColorBackground:  S_base01
+*pointerColorForeground:  S_base1
+
+*color0:                  S_base02
+*color1:                  S_red
+*color2:                  S_green
+*color3:                  S_yellow
+*color4:                  S_blue
+*color5:                  S_magenta
+*color6:                  S_cyan
+*color7:                  S_base2
+*color9:                  S_orange
+*color8:                  S_base03
+*color10:                 S_base01
+*color11:                 S_base00
+*color12:                 S_base0
+*color13:                 S_violet
+*color14:                 S_base1
+*color15:                 S_base3
