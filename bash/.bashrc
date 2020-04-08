@@ -1,6 +1,11 @@
+# Source any completion files in /etc/bash_completion.d.
+for completion_file in /etc/bash_completion.d/*; do
+  source $completion_file
+done
+
 # Set the prompt to show the current working directory in brackets and
 # nothing else.
-PS1="${debian_chroot:+($debian_chroot)}\[\033[32m\][\w]\[\033[0m\] $ "
+PS1="${debian_chroot:+($debian_chroot)}\[\033[32m\][\w] \$ \[\033[0m\]"
 
 # Path modifications.
 
@@ -15,7 +20,7 @@ export PATH
 
 # Environment variables.
 
-export EDITOR=vim
+export EDITOR=emacs
 
 # Aliases.
 
