@@ -104,7 +104,7 @@ exec --no-startup-id xcompmgr -n &
 exec --no-startup-id redshift -c ~/.redshift.conf &
 
 # Set background to static image.
-exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/romania.jpg
+exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/oil-landscape-lake.png
 
 # Start system tray applications.
 exec --no-startup-id pasystray &
