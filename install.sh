@@ -15,6 +15,7 @@ stow bash
 stow emacs
 stow git
 stow i3
+stow redshift
 stow ruby
 stow vim
 stow xorg

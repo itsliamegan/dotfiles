@@ -100,6 +100,9 @@ exec --no-startup-id xcape
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
 
+# Start redshift to make colors easier on the eyes at night.
+exec --no-startup-id redshift -c ~/.redshift.conf &
+
 # Set background to static image.
 exec --no-startup-id feh --bg-scale ~/pictures/wallpapers/romania.jpg
 

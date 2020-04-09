@@ -25,6 +25,7 @@ sudo apt install -y \
    pavucontrol \
    pulseaudio \
    ripgrep \
+   redshift \
    rofi \
    rxvt-unicode \
    stow \
