@@ -110,7 +110,7 @@ I use 2 spaces instead of tabs for indentation.
 
 Trailing whitespace is annoying, so I delete it on save.
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
@@ -214,6 +214,32 @@ filesystem. I don't like the clutter this creates, so instead I save them to
         `((".*" ,temporary-file-directory t)))
 #+END_SRC
 
+** Dired
+
+Configure some useful options for =dired=. Most importantly:
+
+- =G= Don't show the name of the group that owns the file.
+- =h= Show human readable file sizes.
+
+#+BEGIN_SRC emacs-lisp
+(setq dired-listing-switches "-aGhl --group-directories-first")
+#+END_SRC
+
+** Save Custom Variables to =custom.el=
+
+Emacs will usually append some configuration for customization to your =init.el=
+file, which I have to delete all the time. Instead, I save it to a separate
+file.
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file "~/.emacs.d/custom.el")
+
+  (unless (file-exists-p custom-file)
+    (write-region "" nil custom-file))
+
+  (load custom-file)
+#+END_SRC
+
 * Visuals
 
 ** Theme
@@ -313,7 +339,7 @@ install =evil-mode= to emulate it. I also install a few useful text objects, and
     (setq evil-want-keybinding nil)
     :config
     (evil-mode))
-  
+
   (use-package evil-collection
     :after evil
     :config
@@ -401,14 +427,17 @@ so I use =ido-vertical-mode=.
 
 ** Autocomplete
 
-For basic autocomplete, I install =auto-complete=. I tried setting up =company=,
-but it conflicts with =yasnippet= if I want to use =<tab>= for both actions.
+I use =company= for autocompletion. I wish I could use =<tab>= to both expand a
+completion or snippet, but the alternatives to =company= that allow this are too
+fiddly. I also don't like the default "dropdown" for =company=, and instead use
+just a visual completion of the word.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-complete
+  (use-package company
     :config
-    (ac-config-default)
-    (add-hook 'prog-mode-hook 'auto-complete-mode))
+    (setq company-idle-delay 0
+          company-frontends '(company-preview-frontend))
+    (add-hook 'prog-mode-hook 'company-mode))
 #+END_SRC
 
 ** Snippets
@@ -425,12 +454,14 @@ snippets are achieved with the =yasnippet= package.
 ** Error Checking
 
 I usually disable most of the linting features, but I flub language syntax
-enough that the syntax errors are useful.
+enough that the syntax errors are useful. Like =auto-complete=, these errors
+show up too soon, often while I'm typing, so I increase that delay.
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :config
-    (setq-default flycheck-disabled-checkers '(ruby-reek))
+    (setq-default flycheck-disabled-checkers '(ruby-reek)
+                  flycheck-idle-change-delay 1.2)
     (global-flycheck-mode))
 #+END_SRC
 * Language-Specific Packages
@@ -446,14 +477,18 @@ install a mode to handle that.
 
 ** Ruby
 
-I =chruby= to change ruby versions and =rspec= for testing.
+I =chruby= to change ruby versions and =rspec= for testing. By default
+=rspec-mode= insists that I use the "documentation" formatter, but I'd like to
+have control over that independent from my editor.
 
 #+BEGIN_SRC emacs-lisp
   (use-package chruby
     :config
     (chruby-use-corresponding))
 
-  (use-package rspec-mode)
+  (use-package rspec-mode
+    :config
+    (setq rspec-command-options ""))
 #+END_SRC
 * Keybindings
 
@@ -485,11 +520,14 @@ keymappings when pressing a prefix.
   (evil-define-key 'motion
     "L" 'evil-forward-arg
     "H" 'evil-backward-arg)
-    
+
   (evil-define-key 'normal 'global
     (kbd "C-p") 'projectile-find-file
     (kbd "M-p") 'projectile-switch-project
 
     (kbd "M-x") 'smex
     (kbd "C-x g") 'magit)
+
+  (evil-define-key 'insert 'global
+    (kbd "M-/") 'company-complete-common)
 #+END_SRC
