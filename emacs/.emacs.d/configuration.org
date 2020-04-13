@@ -21,14 +21,16 @@ back down to a reasonable 50MB afterwards to prevent any stuttering.
 
 ** Scratch Buffer
 
-I dislike the default starting screen, so instead I start on a scratch buffer. I
-never find the Lisp buffer useful, though, so I start Emacs in an =org-mode=
-buffer.
+I dislike the default starting screen and starting message, so instead I start
+on a scratch buffer. I never find the Lisp buffer useful, though, so I start
+Emacs in an =org-mode= buffer.
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-splash-screen t
         initial-scratch-message nil
         initial-major-mode 'org-mode)
+
+  (defun startup-echo-area-message () "")
 #+END_SRC
 
 * Utility Functions
@@ -54,6 +56,11 @@ In case I need to use them later, here I define a few useful functions.
       (kill-buffer (current-buffer))
       (find-file new-name)
       (message "Renamed '%s' to '%s'" filename new-name)))
+
+  (defmacro with-suppressed-message (&rest body)
+    "Suppress any messages in the echo area."
+    `(let ((inhibit-message t))
+      ,@body))
 #+END_SRC
 
 * Package Management
@@ -435,7 +442,7 @@ just a visual completion of the word.
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :config
-    (setq company-idle-delay 0
+    (setq company-idle-delay .2
           company-frontends '(company-preview-frontend))
     (add-hook 'prog-mode-hook 'company-mode))
 #+END_SRC
@@ -460,7 +467,7 @@ show up too soon, often while I'm typing, so I increase that delay.
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :config
-    (setq-default flycheck-disabled-checkers '(ruby-reek)
+    (setq-default flycheck-disabled-checkers '(ruby-reek ruby-rubocop)
                   flycheck-idle-change-delay 1.2)
     (global-flycheck-mode))
 #+END_SRC
@@ -477,14 +484,21 @@ install a mode to handle that.
 
 ** Ruby
 
-I =chruby= to change ruby versions and =rspec= for testing. By default
-=rspec-mode= insists that I use the "documentation" formatter, but I'd like to
-have control over that independent from my editor.
+First, I make sure that I don't indent in to the previous indentation when a
+method call extends over multiple lines. I also =chruby= to change ruby versions
+and =rspec= for testing. By default =rspec-mode= insists that I use the
+"documentation" formatter, but I'd like to have control over that independent
+from my editor.
 
 #+BEGIN_SRC emacs-lisp
+  (setq ruby-use-smie nil
+        ruby-deep-indent-paren nil)
+
   (use-package chruby
     :config
-    (chruby-use-corresponding))
+    (add-hook 'ruby-mode-hook
+      (lambda ()
+        (with-suppressed-message (chruby-use-corresponding)))))
 
   (use-package rspec-mode
     :config
