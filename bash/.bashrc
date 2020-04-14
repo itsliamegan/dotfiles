@@ -15,6 +15,7 @@ function addtopath {
 
 addtopath /usr/sbin
 addtopath /usr/local/sbin
+addtopath ~/.cask/bin
 
 export PATH
 
