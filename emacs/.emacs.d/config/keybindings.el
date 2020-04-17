@@ -6,9 +6,7 @@
   (global-set-key (kbd "M-p") 'projectile-switch-project)
 
   (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "C-x g") 'magit)
-
-  (global-set-key (kbd "M-/") 'company-complete-common))
+  (global-set-key (kbd "C-x g") 'magit))
 
 (show-cheat-sheet-when-pressing-prefix)
 (bind-commands)
