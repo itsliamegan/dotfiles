@@ -10,6 +10,12 @@
 (defun configure-rspec-independently-from-emacs ()
   (setq rspec-command-options ""))
 
+(defun scroll-to-first-error-after-running-specs ()
+  (add-hook 'rspec-compilation-mode-hook
+            (lambda ()
+              (setq compilation-scroll-output 'first-error))))
+
 (properly-indent-after-newlines)
 (use-correct-ruby-from-chruby)
 (configure-rspec-independently-from-emacs)
+(scroll-to-first-error-after-running-specs)
