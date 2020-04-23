@@ -32,9 +32,13 @@
   (set-face-attribute 'show-paren-match nil :weight 'normal)
   (add-hook 'prog-mode-hook 'show-paren-mode))
 
+(defun use-pretty-symbols ()
+  (global-prettify-symbols-mode +1))
+
 (configure-theme)
 (hide-graphical-ui-elements)
 (hide-minor-modes-in-modeline)
 (highlight-offending-characters)
 (highlight-current-line)
 (highlight-expressions-enclosed-by-parens)
+(use-pretty-symbols)
