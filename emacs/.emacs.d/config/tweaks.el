@@ -7,6 +7,14 @@
 (defun always-load-newest-file-version ()
   (setq load-prefer-newer t))
 
+(defun improve-startup-screen ()
+    (setq dashboard-center-content t
+          dashboard-show-shortcuts nil
+          dashboard-set-footer nil
+          dashboard-items '((recents . 5)
+                            (projects . 5)))
+  (dashboard-setup-startup-hook))
+
 (defun hide-startup-messages ()
   (defun startup-echo-area-message () "")
   (setq inhibit-splash-screen t
@@ -64,6 +72,7 @@
 
 (store-customize-values-in-separate-file)
 (always-load-newest-file-version)
+(improve-startup-screen)
 (hide-startup-messages)
 (indent-using-two-spaces)
 (remove-trailing-whitespace-on-save)

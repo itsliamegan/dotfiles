@@ -5,6 +5,7 @@
 (depends-on "cask")
 (depends-on "chruby")
 (depends-on "company")
+(depends-on "dashboard")
 (depends-on "evil")
 (depends-on "evil-args")
 (depends-on "evil-collection")
