@@ -27,3 +27,4 @@
 (depends-on "solarized-theme")
 (depends-on "which-key")
 (depends-on "whitespace")
+(depends-on "yaml-mode")
