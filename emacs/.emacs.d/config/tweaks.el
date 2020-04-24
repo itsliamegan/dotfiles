@@ -11,8 +11,8 @@
     (setq dashboard-center-content t
           dashboard-show-shortcuts nil
           dashboard-set-footer nil
-          dashboard-items '((recents . 5)
-                            (projects . 5)))
+          dashboard-items '((projects . 5)
+                            (recents . 5)))
   (dashboard-setup-startup-hook))
 
 (defun hide-startup-messages ()
