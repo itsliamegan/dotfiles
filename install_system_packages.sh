@@ -36,7 +36,6 @@ sudo apt install -y \
    vim \
    wget \
    xbacklight \
-   xcape \
    xcompmgr \
    xinput \
    xorg

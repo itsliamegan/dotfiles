@@ -93,10 +93,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 # Rebind keys.
 exec --no-startup-id xmodmap ~/.Xmodmap
 
-# Start xcape to allow Control to be used as Escape when pressed but as normal
-# Control when held.
-exec --no-startup-id xcape
-
 # Start xcompmgr to manage transparency.
 exec --no-startup-id xcompmgr -n &
 
