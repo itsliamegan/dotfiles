@@ -70,6 +70,9 @@
 (defun always-use-syntax-highlighting ()
   (global-font-lock-mode +1))
 
+(defun switch-to-help-window-after-opening ()
+  (setq help-window-select t))
+
 (store-customize-values-in-separate-file)
 (always-load-newest-file-version)
 (improve-startup-screen)
@@ -88,3 +91,4 @@
 (backup-and-autosave-to-temp-directory)
 (improve-dired-output)
 (always-use-syntax-highlighting)
+(switch-to-help-window-after-opening)
