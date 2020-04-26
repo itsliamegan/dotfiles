@@ -35,7 +35,7 @@
 (defun bind-rspec-commands ()
   (general-define-key
    :states 'normal
-   :keymaps 'rspec-verifiable-mode-map
+   :keymaps 'ruby-mode-map
 
    "SPC a" 'rspec-verify-all
    "SPC v" 'rspec-verify

@@ -19,11 +19,13 @@
   (setq rspec-use-chruby t))
 
 (defun switch-to-rspec-window-after-running ()
-  (defadvice compile (after jump-back activate)
-    (other-window 1)))
+  (add-hook 'compilation-finish-functions
+            (lambda (buffer string)
+              (other-window 1))))
 
 (properly-indent-after-newlines)
 (use-correct-ruby-from-chruby)
 (configure-rspec-independently-from-emacs)
 (scroll-to-first-error-after-running-specs)
 (use-correct-ruby-in-rspec)
+(switch-to-rspec-window-after-running)
