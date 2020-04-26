@@ -12,6 +12,7 @@
 (depends-on "evil-collection")
 (depends-on "evil-magit")
 (depends-on "evil-surround")
+(depends-on "flx")
 (depends-on "flycheck")
 (depends-on "general")
 (depends-on "ido")

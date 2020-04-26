@@ -18,6 +18,9 @@
    "C-S-p" 'projectile-switch-project
    "C-p" 'projectile-find-file
 
+   "C-S-o" 'dired
+   "C-o" 'find-file
+
    "C-s" 'save-buffer
    "C-," 'previous-buffer
    "C-." 'next-buffer
