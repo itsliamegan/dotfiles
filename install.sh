@@ -1,21 +1,22 @@
 #!/bin/sh
 
-# Install the necessary system packages.
-./install_system_packages.sh
-
-# Install Ruby gems.
+./install_debian_packages.sh
 ./install_ruby_gems.sh
 
-# Remove any files that might conflict.
-rm ~/.bashrc
+remove_conflicting_files () {
+  rm -f ~/.bashrc
+}
 
-# Symlink configuration files in each of the subdirectories to the
-# home directory.
-stow bash
-stow emacs
-stow git
-stow i3
-stow redshift
-stow ruby
-stow vim
-stow xorg
+symlink_config_files () {
+  stow bash
+  stow emacs
+  stow git
+  stow i3
+  stow redshift
+  stow ruby
+  stow vim
+  stow xorg
+}
+
+remove_conflicting_files
+symlink_config_files

@@ -1,6 +1,6 @@
 #!/bin/sh
 
 gem install \
-    flay \
-    flog \
-    reek
+  flay \
+  flog \
+  reek
