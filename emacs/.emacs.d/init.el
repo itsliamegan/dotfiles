@@ -18,7 +18,7 @@
                     gc-cons-threshold 50-megabytes
                     gc-cons-percentage 0.1))))
 
-(defun increase-garbage-collection-threshold-then-decrease-after-startup ()
+(defun increase-garbage-collection-threshold-during-startup ()
   (increase-garbage-collection-threshold)
   (decrease-garbage-collection-threshold-after-startup))
 
@@ -26,9 +26,9 @@
   (require 'cask "~/.cask/cask.el")
   (cask-initialize)
   (require 'pallet)
-  (pallet-mode t))
+  (pallet-mode +1))
 
-(increase-garbage-collection-threshold-then-decrease-after-startup)
+(increase-garbage-collection-threshold-during-startup)
 (configure-package-management)
 
 (load-config-files)
