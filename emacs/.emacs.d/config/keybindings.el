@@ -26,7 +26,9 @@
    "C-." 'next-buffer
 
    "C-f" 'swiper
+   "C-S-f" 'counsel-projectile-rg
    "C-r" 'vr/query-replace
+   "C-S-r" 'projectile-replace
 
    "SPC SPC" 'counsel-M-x
    "SPC q" 'save-buffers-kill-terminal
