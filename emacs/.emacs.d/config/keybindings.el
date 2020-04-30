@@ -10,21 +10,21 @@
 (defun bind-normal-copy-paste ()
   (cua-mode +1))
 
-(defun bind-rspec-commands ()
+(defun bind-test-commands ()
   (general-define-key
    :states 'normal
-   :keymaps 'ruby-mode-map
+   :states 'override
 
-   "SPC t p" 'rspec-verify-all
-   "SPC t f" 'rspec-verify
-   "SPC t s" 'rspec-verify-single
-   "SPC t r" 'rspec-rerun
-   "SPC t t" 'rspec-toggle-spec-and-target))
+   "SPC t p" 'test-project
+   "SPC t f" 'test-file
+   "SPC t s" 'test-single
+   "SPC t r" 'test-rerun
+   "SPC t t" 'test-toggle))
 
 (defun bind-commands ()
   (bind-escape-to-cancel-actions)
   (bind-normal-copy-paste)
-  (bind-rspec-commands)
+  (bind-test-commands)
 
   (general-define-key
    :states 'normal

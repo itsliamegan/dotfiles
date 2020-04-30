@@ -5,6 +5,7 @@
     (load "tweaks.el")
     (load "ui.el")
     (load-files-in-directory "~/.emacs.d/modes")
+    (load "testing.el")
     (load "keybindings.el")))
 
 (defun increase-garbage-collection-threshold ()
