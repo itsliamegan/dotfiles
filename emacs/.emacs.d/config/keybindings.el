@@ -10,7 +10,22 @@
 (defun bind-normal-copy-paste ()
   (cua-mode +1))
 
+(defun bind-rspec-commands ()
+  (general-define-key
+   :states 'normal
+   :keymaps 'ruby-mode-map
+
+   "SPC t p" 'rspec-verify-all
+   "SPC t f" 'rspec-verify
+   "SPC t s" 'rspec-verify-single
+   "SPC t r" 'rspec-rerun
+   "SPC t t" 'rspec-toggle-spec-and-target))
+
 (defun bind-commands ()
+  (bind-escape-to-cancel-actions)
+  (bind-normal-copy-paste)
+  (bind-rspec-commands)
+
   (general-define-key
    :states 'normal
    :keymaps 'override
@@ -21,32 +36,23 @@
    "C-S-o" 'dired
    "C-o" 'find-file
 
+   "C-S-f" 'counsel-projectile-rg
+   "C-f" 'swiper
+
+   "C-S-r" 'projectile-replace
+   "C-r" 'vr/query-replace
+
+   "C-<tab>" 'other-window
+   "C-t" 'split-window-right
+   "C-w" 'delete-window
+
    "C-s" 'save-buffer
    "C-," 'previous-buffer
    "C-." 'next-buffer
-
-   "C-f" 'swiper
-   "C-S-f" 'counsel-projectile-rg
-   "C-r" 'vr/query-replace
-   "C-S-r" 'projectile-replace
 
    "SPC SPC" 'counsel-M-x
    "SPC q" 'save-buffers-kill-terminal
    "SPC g" 'magit))
 
-(defun bind-rspec-commands ()
-  (general-define-key
-   :states 'normal
-   :keymaps 'ruby-mode-map
-
-   "SPC a" 'rspec-verify-all
-   "SPC v" 'rspec-verify
-   "SPC s" 'rspec-verify-single
-   "SPC r" 'rspec-rerun
-   "SPC t" 'rspec-toggle-spec-and-target))
-
 (show-cheat-sheet-when-pressing-prefix)
-(bind-escape-to-cancel-actions)
-(bind-normal-copy-paste)
 (bind-commands)
-(bind-rspec-commands)
