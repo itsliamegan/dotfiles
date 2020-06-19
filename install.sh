@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./install_debian_packages.sh
+./install_macos_packages.sh
 ./install_ruby_gems.sh
 
 remove_conflicting_files () {
@@ -8,14 +8,10 @@ remove_conflicting_files () {
 }
 
 symlink_config_files () {
-  stow bash
   stow emacs
   stow git
-  stow i3
-  stow redshift
+  stow fish
   stow ruby
-  stow vim
-  stow xorg
 }
 
 remove_conflicting_files

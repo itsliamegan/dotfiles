@@ -4,4 +4,3 @@ emacs/.emacs.d/*
 !emacs/.emacs.d/config
 !emacs/.emacs.d/modes
 !emacs/.emacs.d/snippets
-vim/.vim
