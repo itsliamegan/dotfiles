@@ -65,13 +65,16 @@
 (defun improve-dired-output ()
   ;; G - Don't show the group that owns the file.
   ;; h - Show human readable file sizes.
-  (setq dired-listing-switches "-aGhl --group-directories-first"))
+  (setq dired-listing-switches "-aGhl"))
 
 (defun always-use-syntax-highlighting ()
   (global-font-lock-mode +1))
 
 (defun switch-to-help-window-after-opening ()
   (setq help-window-select t))
+
+(defun fullscreen-on-startup ()
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
 (store-customize-values-in-separate-file)
 (always-load-newest-file-version)
@@ -92,3 +95,4 @@
 (improve-dired-output)
 (always-use-syntax-highlighting)
 (switch-to-help-window-after-opening)
+(fullscreen-on-startup)

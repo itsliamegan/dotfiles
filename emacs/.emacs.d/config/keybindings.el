@@ -30,25 +30,28 @@
    :states 'normal
    :keymaps 'override
 
-   "C-S-p" 'projectile-switch-project
-   "C-p" 'projectile-find-file
+   "s-P" 'projectile-switch-project
+   "s-p" 'projectile-find-file
 
-   "C-S-o" 'dired
-   "C-o" 'find-file
+   "s-O" 'dired
+   "s-o" 'find-file
 
-   "C-S-f" 'counsel-projectile-rg
-   "C-f" 'swiper
+   "s-F" 'counsel-projectile-rg
+   "s-f" 'swiper
 
-   "C-S-r" 'projectile-replace
-   "C-r" 'vr/query-replace
+   "s-R" 'projectile-replace
+   "s-r" 'vr/query-replace
 
-   "C-<tab>" 'other-window
-   "C-t" 'split-window-right
-   "C-w" 'delete-window
+   "s-<tab>" 'other-window
+   "s-t" 'split-window-right
+   "s-w" 'delete-window
 
-   "C-s" 'save-buffer
-   "C-," 'previous-buffer
-   "C-." 'next-buffer
+   "s-s" 'save-buffer
+   "s-," 'previous-buffer
+   "s-." 'next-buffer
+
+   "s-Z" 'undo-tree-redo
+   "s-z" 'undo-tree-undo
 
    "SPC SPC" 'counsel-M-x
    "SPC q" 'save-buffers-kill-terminal
