@@ -1,7 +1,9 @@
 #!/bin/sh
 
 brew install \
+  bbatsche/fisher/fisherman
   chruby \
+  chruby-fish \
   composer \
   curl \
   fish \
