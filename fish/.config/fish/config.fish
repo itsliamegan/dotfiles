@@ -22,7 +22,7 @@ function add_directories_to_path
 end
 
 function add_directories_to_cd_path
-  set --global --export CDPATH ~/Projects ~ $CDPATH
+  set --global --export CDPATH ~/Projects ~ . $CDPATH
 end
 
 function manage_language_versions
