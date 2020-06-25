@@ -15,6 +15,12 @@
             (lambda ()
               (setq company-frontends '(company-preview-frontend)))))
 
+(defun disable-slow-remote-c++-completion ()
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (when (file-remote-p default-directory) (company-mode -1)))))
+
 (enable-completions-when-programming)
 (slightly-delay-showing-completions)
 (only-show-completions-inline)
+(disable-slow-remote-c++-completion)

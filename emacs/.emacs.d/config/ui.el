@@ -23,7 +23,7 @@
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font-size ()
-  (setq font-size-in-pt 22)
+  (setq font-size-in-pt 28)
   (setq font-size (* font-size-in-pt 10))
   (set-face-attribute 'default nil :height font-size))
 

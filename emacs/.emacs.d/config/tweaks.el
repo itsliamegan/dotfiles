@@ -9,8 +9,9 @@
 
 (defun improve-startup-screen ()
   (setq dashboard-center-content t
-        dashboard-show-shortcuts nil
         dashboard-set-footer nil
+        dashboard-show-shortcuts nil
+        dashboard-startup-banner 'logo
         dashboard-items '((recents . 5)
                           (projects . 5)))
   (dashboard-setup-startup-hook))
@@ -20,7 +21,7 @@
   (setq inhibit-splash-screen t
         initial-scratch-message nil))
 
-(defun indent-using-two-spaces ()
+(defun indent-using-two-spaces-in-most-modes ()
   (setq-default indent-tabs-mode nil
                 tab-width 2
                 tab-stop-list (number-sequence 2 60 2)))
@@ -76,11 +77,19 @@
 (defun fullscreen-on-startup ()
   (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 
+(defun show-relative-line-numbers-for-programming-modes ()
+  (setq display-line-numbers-type 'relative)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode))
+
+(defun use-system-PATH ()
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 (store-customize-values-in-separate-file)
 (always-load-newest-file-version)
 (improve-startup-screen)
 (hide-startup-messages)
-(indent-using-two-spaces)
+(indent-using-two-spaces-in-most-modes)
 (remove-trailing-whitespace-on-save)
 (answer-questions-with-abbreviations)
 (treat-camelcase-as-separate-words)
@@ -96,3 +105,5 @@
 (always-use-syntax-highlighting)
 (switch-to-help-window-after-opening)
 (fullscreen-on-startup)
+(show-relative-line-numbers-for-programming-modes)
+(use-system-PATH)
