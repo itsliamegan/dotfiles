@@ -22,10 +22,8 @@
   (set-mode-line-colors)
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
-(defun set-font-size ()
-  (setq font-size-in-pt 28)
-  (setq font-size (* font-size-in-pt 10))
-  (set-face-attribute 'default nil :height font-size))
+(defun set-font ()
+  (set-face-attribute 'default nil :font "SF Mono-28"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
@@ -59,7 +57,7 @@
   (global-prettify-symbols-mode +1))
 
 (configure-theme)
-(set-font-size)
+(set-font)
 (hide-graphical-ui-elements)
 (hide-minor-modes-in-modeline)
 (highlight-offending-characters)
