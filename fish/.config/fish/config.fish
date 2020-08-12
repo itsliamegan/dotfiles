@@ -18,7 +18,7 @@ function override_defaults
 end
 
 function add_directories_to_path
-  set --global --export PATH ~/.cask/bin $PATH
+  set --global --export PATH ~/.cask/bin ~/.composer/vendor/bin vendor/bin (npm bin -g) (npm root -g) $PATH
 end
 
 function add_directories_to_cd_path

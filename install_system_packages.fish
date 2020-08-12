@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env fish
 
 brew install \
   bbatsche/fisher/fisherman
@@ -9,9 +9,9 @@ brew install \
   fish \
   git \
   htop \
-  mysql \
   nvm \
   php \
+  postgresql \
   ripgrep \
   ruby-install \
   sqlite \

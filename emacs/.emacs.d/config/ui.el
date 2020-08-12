@@ -1,29 +1,21 @@
-(defun set-mode-line-colors ()
-  (set-face-attribute 'mode-line nil
-                      :background "#2f2f2f"
-                      :foreground "#f5f5f5"
-                      :box '(:color "#f5f5f5"))
-  (set-face-attribute 'mode-line-inactive nil
-                      :background "#202020"
-                      :foreground "#bebebe"
-                      :box '(:color "#bebebe")))
-
 (defun set-company-mode-colors ()
   (set-face-attribute 'company-preview nil
-                      :background "#000000"
-                      :foreground "#f6f3e8")
+                      :background "#151515"
+                      :foreground "#a0a0a0")
   (set-face-attribute 'company-preview-common nil
-                      :background "#000000"
-                      :foreground "#f6f3e8"))
+                      :background "#151515"
+                      :foreground "#a0a0a0"))
+
+(defun set-comment-face ()
+  (set-face-italic 'font-lock-comment-face nil))
 
 (defun configure-theme ()
-  (load-theme 'ir-black t)
-  (set-face-attribute 'default nil :foreground "#ffffff")
-  (set-mode-line-colors)
+  (load-theme 'jbeans t)
+  (set-comment-face)
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "SF Mono-28"))
+  (set-face-attribute 'default nil :font "Menlo-22"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
@@ -61,5 +53,6 @@
 (hide-graphical-ui-elements)
 (hide-minor-modes-in-modeline)
 (highlight-offending-characters)
+(highlight-current-line)
 (highlight-matching-parens)
 (use-pretty-symbols)

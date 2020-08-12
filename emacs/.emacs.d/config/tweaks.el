@@ -85,6 +85,18 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+(defun remove-messages-buffer ()
+  (setq-default message-log-max nil)
+  (kill-buffer "*Messages*"))
+
+(defun remove-scratch-buffer ()
+  (if (get-buffer "*scratch*")
+      (kill-buffer "*scratch*")))
+
+(defun remove-extraneous-buffers ()
+  (remove-messages-buffer)
+  (remove-scratch-buffer))
+
 (store-customize-values-in-separate-file)
 (always-load-newest-file-version)
 (improve-startup-screen)
@@ -107,3 +119,4 @@
 (fullscreen-on-startup)
 (show-relative-line-numbers-for-programming-modes)
 (use-system-PATH)
+(remove-extraneous-buffers)
