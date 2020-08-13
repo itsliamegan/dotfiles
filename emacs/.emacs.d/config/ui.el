@@ -15,7 +15,7 @@
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "Menlo-22"))
+  (set-face-attribute 'default nil :font "Menlo-28"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
