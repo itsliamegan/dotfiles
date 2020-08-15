@@ -15,7 +15,7 @@
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "Menlo-28"))
+  (set-face-attribute 'default nil :font "Monaco-30"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
@@ -45,9 +45,6 @@
   (set-face-attribute 'show-paren-match nil :weight 'normal)
   (add-hook 'prog-mode-hook 'show-paren-mode))
 
-(defun use-pretty-symbols ()
-  (global-prettify-symbols-mode +1))
-
 (configure-theme)
 (set-font)
 (hide-graphical-ui-elements)
@@ -55,4 +52,3 @@
 (highlight-offending-characters)
 (highlight-current-line)
 (highlight-matching-parens)
-(use-pretty-symbols)
