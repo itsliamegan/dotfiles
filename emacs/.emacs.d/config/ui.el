@@ -15,7 +15,7 @@
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "Monaco-30"))
+  (set-face-attribute 'default nil :font "JetBrains Mono-28"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
