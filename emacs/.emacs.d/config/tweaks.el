@@ -13,7 +13,8 @@
         dashboard-show-shortcuts nil
         dashboard-startup-banner 'logo
         dashboard-items '((recents . 5)
-                          (projects . 5)))
+                          (projects . 5)
+                          (bookmarks . 5)))
   (dashboard-setup-startup-hook))
 
 (defun hide-startup-messages ()
