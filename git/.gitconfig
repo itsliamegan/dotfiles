@@ -5,6 +5,8 @@
   dc = diff --cached HEAD
 [core]
   excludesfile = ~/.gitignore
+[init]
+  defaultBranch = main
 [user]
   name = Liam Egan
   email = liam@liamegan.com
