@@ -26,7 +26,6 @@
 (depends-on "magit")
 (depends-on "markdown-mode")
 (depends-on "minions")
-(depends-on "minitest")
 (depends-on "pallet")
 (depends-on "projectile")
 (depends-on "rspec-mode")
