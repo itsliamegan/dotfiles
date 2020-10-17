@@ -11,6 +11,7 @@
 (depends-on "evil")
 (depends-on "evil-args")
 (depends-on "evil-collection")
+(depends-on "evil-commentary")
 (depends-on "evil-magit")
 (depends-on "evil-surround")
 (depends-on "exec-path-from-shell")
