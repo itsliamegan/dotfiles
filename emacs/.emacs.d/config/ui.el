@@ -12,10 +12,14 @@
 (defun configure-theme ()
   (load-theme 'jbeans t)
   (set-comment-face)
+  (set-face-foreground 'default "#ffffff")
+  (set-face-foreground 'font-lock-variable-name-face "#c6b6ee")
+  (set-face-foreground 'font-lock-type-face "#ffb964")
+  (set-face-foreground 'font-lock-keyword-face "#84b7d7")
   (add-hook 'company-mode-hook 'set-company-mode-colors))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "JetBrains Mono-28"))
+  (set-face-attribute 'default nil :font "Menlo-24"))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
