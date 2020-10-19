@@ -14,7 +14,7 @@
    :states 'normal
    :keymaps 'override
 
-   "SPC SPC" 'counsel-M-x
+   "SPC SPC" 'smex
 
    "SPC t p" 'test-project
    "SPC t f" 'test-file
@@ -27,17 +27,20 @@
    "s-P" 'projectile-switch-project
    "s-p" 'projectile-find-file
 
-   "s-F" 'counsel-projectile-rg
-   "s-f" 'swiper
+   "s-F" 'projectile-rg
+   "s-f" 'isearch-forward
 
-   "s-O" 'counsel-switch-buffer
-   "s-o" 'counsel-find-file
+   "s-O" 'switch-buffer
+   "s-o" 'find-file
 
    "s-R" 'projectile-replace
    "s-r" 'vr/query-replace
 
    "s-." 'next-buffer
-   "s-," 'previous-buffer))
+   "s-," 'previous-buffer
+
+   "g c" 'avy-goto-char
+   "g l" 'avy-goto-line))
 
 (show-cheat-sheet-when-pressing-prefix)
 (bind-commands)

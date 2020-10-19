@@ -1,25 +1,14 @@
-(defun set-company-mode-colors ()
-  (set-face-attribute 'company-preview nil
-                      :background "#151515"
-                      :foreground "#a0a0a0")
-  (set-face-attribute 'company-preview-common nil
-                      :background "#151515"
-                      :foreground "#a0a0a0"))
-
 (defun set-comment-face ()
   (set-face-italic 'font-lock-comment-face nil))
 
 (defun configure-theme ()
-  (load-theme 'jbeans t)
-  (set-comment-face)
-  (set-face-foreground 'default "#ffffff")
-  (set-face-foreground 'font-lock-variable-name-face "#c6b6ee")
-  (set-face-foreground 'font-lock-type-face "#ffb964")
-  (set-face-foreground 'font-lock-keyword-face "#84b7d7")
-  (add-hook 'company-mode-hook 'set-company-mode-colors))
+  (load-theme 'pastel t))
 
 (defun set-font ()
-  (set-face-attribute 'default nil :font "Menlo-24"))
+  (let ((font-size (if (eq (display-pixel-height) 900)
+                       "24"
+                     "28")))
+    (set-face-attribute 'default nil :font (concat "InconsolataG-" font-size))))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
@@ -45,8 +34,7 @@
 
 (defun highlight-matching-parens ()
   (setq show-paren-delay 0
-        show-paren-style 'parenthesis)
-  (set-face-attribute 'show-paren-match nil :weight 'normal)
+        show-paren-style 'expression)
   (add-hook 'prog-mode-hook 'show-paren-mode))
 
 (configure-theme)

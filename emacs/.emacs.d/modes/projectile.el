@@ -1,5 +1,5 @@
-(defun complete-with-ivy ()
-  (setq projectile-completion-system 'ivy))
+(defun complete-with-ido ()
+  (setq projectile-completion-system 'ido))
 
 (defun open-dired-on-switch-project ()
   (setq projectile-switch-project-action 'projectile-dired))
@@ -10,6 +10,6 @@
 
 (projectile-mode +1)
 
-(complete-with-ivy)
+(complete-with-ido)
 (open-dired-on-switch-project)
 (ignore-third-party-files)

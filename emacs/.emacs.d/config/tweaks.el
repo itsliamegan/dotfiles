@@ -4,6 +4,9 @@
 
   (load custom-file))
 
+(defun store-custom-themes-in-themes-directory ()
+  (setq custom-theme-directory "~/.emacs.d/themes"))
+
 (defun always-load-newest-file-version ()
   (setq load-prefer-newer t))
 
@@ -13,8 +16,7 @@
         dashboard-show-shortcuts nil
         dashboard-startup-banner 'logo
         dashboard-items '((recents . 5)
-                          (projects . 5)
-                          (bookmarks . 5)))
+                          (projects . 5)))
   (dashboard-setup-startup-hook))
 
 (defun hide-startup-messages ()
@@ -98,7 +100,41 @@
   (remove-messages-buffer)
   (remove-scratch-buffer))
 
+(defun custom-mode-line-render (left center right &optional lpad rpad)
+  "Return a string the width of the current window with LEFT, CENTER, and RIGHT
+spaced out accordingly, LPAD and RPAD, can be used to add a number of spaces to
+the front and back of the string."
+  (condition-case err
+      (let* ((left (if lpad (concat (make-string lpad ?\s) left) left))
+             (right (if rpad (concat right (make-string rpad ?\s)) right))
+             (width (apply '+ (window-width) (let ((m (window-margins))) (list (or (car m) 0) (or (cdr m) 0)))))
+             (total-length (+ (length left) (length center) (length right) 2)))
+        (when (> total-length width) (setq left "" right ""))
+        (let* ((left-space (/ (- width (length center)) 2))
+               (right-space (- width left-space (length center)))
+               (lspaces (max (- left-space (length left)) 1))
+               (rspaces (max (- right-space (length right)) 1 0)))
+          (concat left (make-string lspaces  ?\s)
+                  center
+                  (make-string rspaces ?\s)
+                  right)))
+    (error (format "[%s]: (%s) (%s) (%s)" err left center right))))
+
+(defun custom-mode-line-format ()
+  (setq-default mode-line-format
+                '((:eval (custom-mode-line-render
+                          (concat (format-mode-line "%b ")
+                                  (downcase (concat "(" mode-name ")"))
+                                  (if (and (buffer-modified-p) (not buffer-read-only))
+                                      " [+]"
+                                    ""))
+                          ""
+                          (format-mode-line "%l,%c")
+                          1
+                          20)))))
+
 (store-customize-values-in-separate-file)
+(store-custom-themes-in-themes-directory)
 (always-load-newest-file-version)
 (improve-startup-screen)
 (hide-startup-messages)
@@ -118,6 +154,7 @@
 (always-use-syntax-highlighting)
 (switch-to-help-window-after-opening)
 (fullscreen-on-startup)
-(show-relative-line-numbers-for-programming-modes)
+;; (show-relative-line-numbers-for-programming-modes)
 (use-system-PATH)
 (remove-extraneous-buffers)
+(custom-mode-line-format)
