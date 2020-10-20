@@ -34,8 +34,21 @@
 
 (defun highlight-matching-parens ()
   (setq show-paren-delay 0
-        show-paren-style 'expression)
-  (add-hook 'prog-mode-hook 'show-paren-mode))
+        show-paren-style 'parenthesis)
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (show-smartparens-mode)
+              (set-face-attribute 'sp-pair-overlay-face nil :underline nil))))
+
+(defun match-fringe-with-background ()
+  (set-face-attribute 'fringe nil
+                      :foreground (face-foreground 'default)
+                      :background (face-background 'default)))
+
+(defun use-proper-colors-in-compilation-buffer ()
+  (setq compilation-environment '("TERM=xterm-256color"))
+  (advice-add 'compilation-filter :around (lambda (f proc string)
+                                            (funcall f proc (xterm-color-filter string)))))
 
 (configure-theme)
 (set-font)
@@ -44,3 +57,5 @@
 (highlight-offending-characters)
 (highlight-current-line)
 (highlight-matching-parens)
+(match-fringe-with-background)
+(use-proper-colors-in-compilation-buffer)

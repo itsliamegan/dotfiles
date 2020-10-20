@@ -133,6 +133,11 @@ the front and back of the string."
                           1
                           20)))))
 
+(defun jump-to-definitions ()
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq xref-after-jump-hook (lambda ()
+                               (delete-other-windows))))
+
 (store-customize-values-in-separate-file)
 (store-custom-themes-in-themes-directory)
 (always-load-newest-file-version)
@@ -158,3 +163,4 @@ the front and back of the string."
 (use-system-PATH)
 (remove-extraneous-buffers)
 (custom-mode-line-format)
+(jump-to-definitions)

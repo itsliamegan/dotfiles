@@ -13,6 +13,7 @@
 
 (defun use-ido-everywhere ()
   (setq ido-everywhere t)
+  (crm-custom-mode +1)
   (ido-ubiquitous-mode +1))
 
 (defun improve-M-x ()
