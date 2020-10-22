@@ -23,10 +23,9 @@
 
 (defun highlight-offending-characters ()
   ;; face - Required to highlight anything.
-  ;; lines-tail - Anything past the line length.
   ;; tabs - Tab characters.
   ;; trailing - Trailing whitespace.
-  (setq whitespace-style '(face lines-tail tabs trailing))
+  (setq whitespace-style '(face tabs trailing))
   (global-whitespace-mode +1))
 
 (defun highlight-current-line ()
