@@ -19,7 +19,8 @@
 (defun switch-to-rspec-window-after-running ()
   (add-hook 'compilation-finish-functions
             (lambda (buffer string)
-              (other-window 1))))
+              (other-window 1)
+              (delete-other-windows))))
 
 (properly-indent-after-newlines)
 (use-correct-ruby-from-chruby)
