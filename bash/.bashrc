@@ -4,7 +4,7 @@ export EMAIL="liam@liamegan.com"
 export EDITOR=emacs
 
 # Add useful directories to the PATH.
-export PATH=$PATH:~/.cask.bin
+export PATH=$PATH:~/.cask/bin
 export PATH=$PATH:~/.composer/vendor/bin
 export PATH=$PATH:~/.fnm
 export PATH=$PATH:vendor/bin
