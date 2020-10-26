@@ -7,23 +7,18 @@
             (lambda ()
               (with-suppressed-message (chruby-use-corresponding)))))
 
-(defun configure-rspec-independently-from-emacs ()
-  (setq rspec-command-options ""))
-
-(defun scroll-to-first-error-after-running-specs ()
-  (add-hook 'rspec-compilation-mode-hook
+(defun scroll-to-first-error-after-running-tests ()
+  (add-hook 'minitest-compilation-mode-hook
             (lambda ()
               (make-local-variable 'compilation-scroll-output)
               (setq compilation-scroll-output 'first-error))))
 
-(defun switch-to-rspec-window-after-running ()
+(defun switch-to-test-window-after-running ()
   (add-hook 'compilation-finish-functions
             (lambda (buffer string)
-              (other-window 1)
-              (delete-other-windows))))
+              (other-window 1))))
 
 (properly-indent-after-newlines)
 (use-correct-ruby-from-chruby)
-(configure-rspec-independently-from-emacs)
-(scroll-to-first-error-after-running-specs)
-(switch-to-rspec-window-after-running)
+(scroll-to-first-error-after-running-tests)
+(switch-to-test-window-after-running)
