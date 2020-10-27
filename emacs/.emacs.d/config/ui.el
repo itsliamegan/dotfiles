@@ -2,13 +2,13 @@
   (set-face-italic 'font-lock-comment-face nil))
 
 (defun configure-theme ()
-  (load-theme 'pastel t))
+  (load-theme 'github-modern t))
 
 (defun set-font ()
   (let ((font-size (if (eq (display-pixel-height) 900)
                        "24"
                      "28")))
-    (set-face-attribute 'default nil :font (concat "InconsolataG-" font-size))))
+    (set-face-attribute 'default nil :font (concat "Menlo-" font-size))))
 
 (defun hide-graphical-ui-elements ()
   (scroll-bar-mode -1)
@@ -54,7 +54,7 @@
 (hide-graphical-ui-elements)
 (hide-minor-modes-in-modeline)
 (highlight-offending-characters)
-(highlight-current-line)
+;(highlight-current-line)
 (highlight-matching-parens)
 (match-fringe-with-background)
 (use-proper-colors-in-compilation-buffer)

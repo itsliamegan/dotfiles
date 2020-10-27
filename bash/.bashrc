@@ -1,7 +1,7 @@
 # Set some basic variables.
 export NAME="Liam Egan"
 export EMAIL="liam@liamegan.com"
-export EDITOR=emacs
+export EDITOR=vim
 
 # Add useful directories to the PATH.
 export PATH=$PATH:~/.cask/bin
@@ -13,7 +13,7 @@ export PATH=$PATH:vendor/bin
 export CDPATH=.:~/:~/Projects
 
 # Set a pretty prompt.
-export PS1="\u:\033[92m\W \033[037m\$ \033[0m"
+export PS1="\u:\033[92m\W \033[000m\$ \033[0m"
 
 # Use the correct Ruby version from chruby.
 source /usr/local/share/chruby/chruby.sh

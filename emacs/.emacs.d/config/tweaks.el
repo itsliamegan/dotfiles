@@ -159,7 +159,7 @@ the front and back of the string."
 (always-use-syntax-highlighting)
 (switch-to-help-window-after-opening)
 (fullscreen-on-startup)
-;; (show-relative-line-numbers-for-programming-modes)
+(show-relative-line-numbers-for-programming-modes)
 (use-system-PATH)
 (remove-extraneous-buffers)
 (custom-mode-line-format)

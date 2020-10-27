@@ -27,7 +27,7 @@
    "s-P" 'projectile-switch-project
    "s-p" 'projectile-find-file
 
-   "s-F" 'projectile-rg
+   "s-F" 'projectile-ripgrep
    "s-f" 'isearch-forward
 
    "s-O" 'switch-buffer
@@ -37,10 +37,7 @@
    "s-r" 'vr/query-replace
 
    "s-." 'next-buffer
-   "s-," 'previous-buffer
-
-   "g c" 'avy-goto-char
-   "g l" 'avy-goto-line))
+   "s-," 'previous-buffer))
 
 (show-cheat-sheet-when-pressing-prefix)
 (bind-commands)

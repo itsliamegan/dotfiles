@@ -21,4 +21,4 @@
 (properly-indent-after-newlines)
 (use-correct-ruby-from-chruby)
 (scroll-to-first-error-after-running-tests)
-(switch-to-test-window-after-running)
+;(switch-to-test-window-after-running)

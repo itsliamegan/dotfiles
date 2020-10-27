@@ -2,7 +2,6 @@
 (source melpa)
 (source org)
 
-(depends-on "avy")
 (depends-on "cask")
 (depends-on "chruby")
 (depends-on "company")
@@ -20,6 +19,7 @@
 (depends-on "flx-ido")
 (depends-on "flycheck")
 (depends-on "general")
+(depends-on "github-modern-theme")
 (depends-on "ido-completing-read+")
 (depends-on "ido-vertical-mode")
 (depends-on "ir-black-theme")
