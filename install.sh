@@ -6,13 +6,14 @@ brew install \
   chruby \
   composer \
   curl \
+  fd \
+  fnm \
   git \
-  htop \
-  nvm \
   php \
   postgresql \
   ripgrep \
   ruby-install \
+  sd \
   sqlite \
   stow \
   wget \
@@ -21,15 +22,10 @@ brew install \
 # Install GUI programs.
 brew cask install \
   dash \
-  dropbox \
   emacs \
-  google-chrome \
-  iterm2 \
   karabiner-elements \
-  notion \
   scroll-reverser \
   spotify \
-  table-plus \
   1password
 
 # Install Ruby gems.
