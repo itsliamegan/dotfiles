@@ -21,8 +21,11 @@ brew install \
 
 # Install GUI programs.
 brew cask install \
+  amethyst \
   dash \
-  emacs \
+  figma \
+  google-chrome \
+  iterm2 \
   karabiner-elements \
   scroll-reverser \
   spotify \
@@ -33,10 +36,12 @@ gem install \
   flay \
   flog \
   pry \
-  reek
+  reek \
+  standard
 
 # Symlink config files.
-stow emacs
-stow git
 stow bash
+stow git
+stow node
 stow ruby
+stow vim
