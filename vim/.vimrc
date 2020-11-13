@@ -23,6 +23,7 @@ call vundle#end()
 syntax on
 filetype plugin indent on
 
+" Show both absolute line numbers and relative line numbers.
 set number
 set relativenumber
 
@@ -54,8 +55,8 @@ colorscheme grb24bit
 set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
-" Set the font and font size.
-set guifont=Menlo:h28
+" Show the tab bar, even when there's only one file open.
+set showtabline=2
 
 " Disable the visual & audio bell.
 set vb t_vb=
