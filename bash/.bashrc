@@ -2,6 +2,7 @@
 export NAME="Liam Egan"
 export EMAIL="liam@liamegan.com"
 export EDITOR=vim
+export TERM=xterm-256color
 
 # Add useful directories to the PATH.
 export PATH=$PATH:~/.cask/bin
