@@ -8,6 +8,7 @@
   ds = diff --staged
   lo = log
   ll = log --oneline
+  ps = push 
 [color "diff"]
   meta = 11
   frag = magenta bold
