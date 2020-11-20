@@ -68,7 +68,9 @@ let g:ctrlp_show_hidden = 1
 
 " Ignore certain files and directories in ctrlp
 set wildignore+=*.swp
-let g:ctrlp_custom_ignore = "node_modules\|\.git"
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/](\.git|node_modules)'
+  \ }
 
 """"""""""
 " COLORS "
