@@ -42,7 +42,6 @@ alias yt2mp3="youtube-dl --extract-audio --audio-format mp3"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
-# Use the correct Node version from fnm.
 eval $(fnm env)
 
 ###############
