@@ -6,6 +6,8 @@
   cm = commit --message
   di = diff
   ds = diff --staged
+  lo = log
+  ll = log --oneline
 [color "diff"]
   meta = 11
   frag = magenta bold
@@ -22,6 +24,8 @@
   attributesfile = ~/.gitattributes
   pager = diff-so-fancy | less --tabs=2 -RFX
   excludesfile = ~/.gitignore
+[diff "rspec"]
+  xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].*)$"
 [init]
   defaultBranch = main
 [user]
