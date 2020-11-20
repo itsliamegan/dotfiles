@@ -41,4 +41,3 @@ gem install \
   standard
 
 ./symlink_config_files
-
