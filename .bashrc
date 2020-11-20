@@ -23,7 +23,7 @@ export CDPATH=.:~/:~/Projects
 # PROMPT #
 ##########
 
-export PS1="\u:\033[92m\W \033[000m\$ \033[0m"
+export PS1="\u:\[\033[92m\]\W\[\033[000m\] $ \[\033[000m\]"
 
 #########################
 # OVERRIDES AND ALIASES #
