@@ -1,12 +1,26 @@
 [alias]
-  a = commit --amend
+  amend = commit --amend
   anoe = commit --amend --no-edit
   co = checkout
-  cm = commit -m
-  dc = diff --cached HEAD
+  ci = commit --verbose
+  cm = commit --message
+  di = diff
+  ds = diff --staged
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  commit = yellow bold
+  old = red
+  new = green
+  whitespace = red reverse
+[color "diff-highlight"]
+  oldNormal = red
+  oldHighlight = red "#500000"
+  newNormal = green
+  newHighlight = green "#003000"
 [core]
   attributesfile = ~/.gitattributes
-  pager = diff-so-fancy | less --tabs=2 -FX
+  pager = diff-so-fancy | less --tabs=2 -RFX
   excludesfile = ~/.gitignore
 [init]
   defaultBranch = main
