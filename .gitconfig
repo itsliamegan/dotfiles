@@ -6,6 +6,7 @@
   dc = diff --cached HEAD
 [core]
   attributesfile = ~/.gitattributes
+  pager = diff-so-fancy | less --tabs=2 -FX
   excludesfile = ~/.gitignore
 [init]
   defaultBranch = main

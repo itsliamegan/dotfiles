@@ -6,6 +6,7 @@ brew install \
   chruby \
   composer \
   curl \
+  diff-so-fancy \
   fd \
   fnm \
   git \
