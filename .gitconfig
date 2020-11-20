@@ -1,9 +1,11 @@
 [alias]
+  a = commit --amend
+  anoe = commit --amend --no-edit
   co = checkout
   cm = commit -m
-  anoe = commit --amend --no-edit
   dc = diff --cached HEAD
 [core]
+  attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
 [init]
   defaultBranch = main
