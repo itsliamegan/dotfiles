@@ -24,6 +24,7 @@ brew cask install \
   amethyst \
   dash \
   figma \
+  gitup \
   google-chrome \
   iterm2 \
   karabiner-elements \
@@ -44,4 +45,5 @@ stow bash
 stow git
 stow node
 stow ruby
+stow tmux
 stow vim
