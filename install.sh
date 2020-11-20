@@ -15,7 +15,6 @@ brew install \
   ruby-install \
   sd \
   sqlite \
-  stow \
   wget \
   yarn
 
