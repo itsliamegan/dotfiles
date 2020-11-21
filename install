@@ -10,6 +10,7 @@ brew install \
   fd \
   fnm \
   git \
+  pandoc \
   php \
   postgresql \
   ripgrep \
@@ -22,6 +23,7 @@ brew install \
 # Install GUI programs.
 brew cask install \
   amethyst \
+  basictex \
   dash \
   figma \
   gitup \
