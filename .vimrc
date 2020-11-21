@@ -53,11 +53,16 @@ set incsearch
 set ignorecase
 set smartcase
 
+" Automatically wrap at 80 characters.
+set textwidth=79
+set formatoptions+=t
+
 " Restore normal backspace.
 set backspace=indent,eol,start
 
 " Use %% to expand to the directory of the current file.
 cabbr <expr> %% expand('%:p:h')
+
 
 """""""""""""""""
 " FUZZY FINDING "
@@ -84,7 +89,7 @@ colorscheme grb24bit
 """""""
 " GUI "
 """""""
-"
+
 " Fancy status line.
 set laststatus=2
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
