@@ -17,6 +17,7 @@ Plugin 'vundlevim/vundle.vim'
 
 Plugin 'adelarsq/vim-matchit'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'fncll/wordnet.vim'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'romainl/vim-cool'
 Plugin 'thoughtbot/vim-rspec'
@@ -107,8 +108,13 @@ set vb t_vb=
 " Set the leader key to Space.
 let mapleader = " "
 
-" Keybindings for testing.
+" Testing.
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>
 nnoremap <Leader>a :call RunAllSpecs()<CR>
+
+" Looking up words.
+noremap <Leader>wnd :call wordnet#overviews("<C-r>=expand("<cword>")<CR>")<CR>
+noremap <Leader>wns :call wordnet#synonyms("<C-r>=expand("<cword>")<CR>")<CR>
+noremap <leader>wnb :call wordnet#browse("<C-r>=expand("<cword>")<CR>")<CR>

@@ -18,6 +18,7 @@ brew install \
   sd \
   sqlite \
   wget \
+  wordnet \
   yarn
 
 # Install GUI programs.
