@@ -31,6 +31,7 @@ export PS1="\u:\[\033[92m\]\W\[\033[000m\] $ \[\033[000m\]"
 
 alias cd="cd >/dev/null"
 alias ls="ls -GF"
+alias tree="tree -CF"
 
 alias yt2mp4="youtube-dl --format 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
 alias yt2mp3="youtube-dl --extract-audio --audio-format mp3"
