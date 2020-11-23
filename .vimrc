@@ -17,6 +17,7 @@ Plugin 'vundlevim/vundle.vim'
 
 Plugin 'adelarsq/vim-matchit'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ervandew/supertab'
 Plugin 'fncll/wordnet.vim'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'romainl/vim-cool'
