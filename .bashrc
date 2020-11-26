@@ -11,7 +11,6 @@ export TERM=xterm-256color
 # PATH #
 ########
 
-export PATH=$PATH:~/.cask/bin
 export PATH=$PATH:~/.composer/vendor/bin
 export PATH=$PATH:~/.fnm
 export PATH=$PATH:~/.pub-cache/bin
