@@ -6,6 +6,7 @@ paths=(
   ".gitattributes"
   ".gitconfig"
   ".gitignore"
+  ".inputrc"
   ".node-version"
   ".ruby-version"
   ".tmux.conf"
