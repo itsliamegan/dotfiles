@@ -1,46 +1,6 @@
 #!/usr/bin/env bash
 
-# Install system programs.
-brew install \
-  bash \
-  chruby \
-  composer \
-  curl \
-  diff-so-fancy \
-  fd \
-  fnm \
-  git \
-  pandoc \
-  php \
-  postgresql \
-  ripgrep \
-  ruby-install \
-  sd \
-  sqlite \
-  wget \
-  wordnet \
-  yarn
-
-# Install GUI programs.
-brew cask install \
-  amethyst \
-  basictex \
-  dash \
-  figma \
-  gitup \
-  google-chrome \
-  iterm2 \
-  karabiner-elements \
-  scroll-reverser \
-  spotify \
-  1password
-
-# Install Ruby gems.
-gem install \
-  flay \
-  flog \
-  pry \
-  reek \
-  standard
+brew bundle
+bundle install
 
 ./symlink_config_files
