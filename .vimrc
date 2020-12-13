@@ -10,26 +10,23 @@ set encoding=utf-8
 " PLUGINS "
 """""""""""
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plug')
 
-Plugin 'vundlevim/vundle.vim'
+Plug 'adelarsq/vim-matchit'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'fncll/wordnet.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'romainl/vim-cool'
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'wellle/targets.vim'
 
-Plugin 'adelarsq/vim-matchit'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'ervandew/supertab'
-Plugin 'fncll/wordnet.vim'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'romainl/vim-cool'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'wellle/targets.vim'
-
-call vundle#end()
+call plug#end()
 
 """"""""""""""""""""
 " FILES AND EDITOR "

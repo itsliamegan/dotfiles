@@ -16,6 +16,7 @@ brew "ruby-install"
 brew "sqlite"
 brew "wget"
 brew "yarn"
+brew "youtube-dl"
 
 # Install GUI programs.
 cask "basictex"
