@@ -9,6 +9,7 @@
   lo = log
   ll = log --oneline
   ps = push 
+  st = status
 [color "diff"]
   meta = 11
   frag = magenta bold
