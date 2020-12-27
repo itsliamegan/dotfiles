@@ -12,19 +12,23 @@ set encoding=utf-8
 
 call plug#begin('~/.vim/plug')
 
+" Text objects and motions.
 Plug 'adelarsq/vim-matchit'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ervandew/supertab'
-Plug 'fncll/wordnet.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'romainl/vim-cool'
-Plug 'thoughtbot/vim-rspec'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
+
+" Make search more ergonomic.
+Plug 'romainl/vim-cool'
+
+" IDE features: fuzzy finding, tab-complete, and go-to-definition.
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'ludovicchabant/vim-gutentags'
+
+" Dictionary.
+Plug 'fncll/wordnet.vim'
 
 call plug#end()
 
@@ -80,8 +84,6 @@ let g:ctrlp_custom_ignore = {
 " COLORS "
 """"""""""
 
-" Set the color scheme.
-set background=dark
 set termguicolors
 colorscheme grb24bit
 
@@ -96,18 +98,53 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 " Disable the visual & audio bell.
 set vb t_vb=
 
+"""""""""""
+" TESTING "
+"""""""""""
+
+function! RunCurrentTest()
+  let l:filename = @%
+
+  if &filetype == "ruby"
+    let s:last_test_command = "!clear && bundle exec rake test TEST=" . l:filename
+    execute s:last_test_command
+  elseif &filetype == "javascript"
+    let s:last_test_command = "!clear && yarn --silent test " . l:filename
+    execute s:last_test_command
+  endif
+endfunction
+
+function! RunAllTests()
+  if &filetype == "ruby"
+    let s:last_test_command = "!clear && bundle exec rake test"
+    execute s:last_test_command
+  elseif &filetype == "javascript"
+    let s:last_test_command = "!clear && yarn --silent test"
+    execute s:last_test_command
+  endif
+endfunction
+
+function! RunLastTest()
+  if exists("s:last_test_command")
+    execute s:last_test_command
+  endif
+endfunction
+
 """""""""""""""
-" kEYBINDINGS "
+" KEYBINDINGS "
 """""""""""""""
 
 " Set the leader key to Space.
 let mapleader = " "
 
+" Switching buffers.
+nnoremap gn :bn<CR>
+nnoremap gp :bp<CR>
+
 " Testing.
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
-nnoremap <Leader>a :call RunAllSpecs()<CR>
+nnoremap <Leader>t :call RunCurrentTest()<CR>
+nnoremap <Leader>a :call RunAllTests()<CR>
+nnoremap <Leader>l :call RunLastTest()<CR>
 
 " Looking up words.
 noremap <Leader>wnd :call wordnet#overviews("<C-r>=expand("<cword>")<CR>")<CR>
