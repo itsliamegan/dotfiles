@@ -8,9 +8,8 @@ paths=(
   ".gitignore"
   ".hushlogin"
   ".inputrc"
-  ".node-version"
-  ".ruby-version"
   ".tmux.conf"
+  ".tool-versions"
   ".vimrc"
 )
 
